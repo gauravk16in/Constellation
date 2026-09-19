@@ -1,0 +1,16 @@
+.DS_Store
+**/.DS_Store
+Expo Skills Collection.zip
+**/node_modules/
+**/.expo/
+**/dist/
+**/web-build/
+**/.env
+**/.env*.local
+*.pem
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.tsbuildinfo

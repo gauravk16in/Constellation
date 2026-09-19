@@ -1,0 +1,318 @@
+<!DOCTYPE html><html class="light" lang="en" style="width: 460px; height: 876px; overflow: hidden; position: relative;"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>PottyPal - History</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&amp;family=Quicksand:wght@600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary-fixed-variant": "#481bc6",
+                      "on-secondary": "#ffffff",
+                      "surface-dim": "#ddd8e5",
+                      "secondary": "#a53a34",
+                      "on-secondary-container": "#721513",
+                      "on-error-container": "#93000a",
+                      "inverse-primary": "#cabeff",
+                      "on-secondary-fixed-variant": "#84231f",
+                      "on-tertiary-fixed": "#001f28",
+                      "on-error": "#ffffff",
+                      "on-secondary-fixed": "#410002",
+                      "on-background": "#1c1a24",
+                      "surface-container-low": "#f7f1ff",
+                      "outline-variant": "#c9c4d7",
+                      "primary-container": "#7858f5",
+                      "tertiary-container": "#007f9c",
+                      "tertiary": "#00647c",
+                      "surface-tint": "#613ede",
+                      "on-primary": "#ffffff",
+                      "secondary-container": "#fd7c72",
+                      "outline": "#797586",
+                      "tertiary-fixed-dim": "#4cd6ff",
+                      "on-tertiary-fixed-variant": "#004e60",
+                      "inverse-on-surface": "#f4eefc",
+                      "inverse-surface": "#312f39",
+                      "on-surface": "#1c1a24",
+                      "surface-container-highest": "#e6e0ed",
+                      "surface-container-high": "#ebe6f3",
+                      "background": "#fdf8ff",
+                      "primary": "#5e3bdb",
+                      "primary-fixed": "#e6deff",
+                      "error-container": "#ffdad6",
+                      "secondary-fixed-dim": "#ffb4ac",
+                      "primary-fixed-dim": "#cabeff",
+                      "on-primary-container": "#fffbff",
+                      "surface-container": "#f1ebf9",
+                      "surface-variant": "#e6e0ed",
+                      "secondary-fixed": "#ffdad6",
+                      "on-primary-fixed": "#1c0062",
+                      "on-surface-variant": "#484555",
+                      "surface-bright": "#fdf8ff",
+                      "on-tertiary": "#ffffff",
+                      "error": "#ba1a1a",
+                      "tertiary-fixed": "#b7eaff",
+                      "surface": "#fdf8ff",
+                      "on-tertiary-container": "#fafdff",
+                      "chart-mint": "#eefbed",
+                      "chart-cyan-light": "#e0f7f9",
+                      "chart-cyan": "#bbf0f4"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px",
+                      "squircle": "12px"
+              },
+              "spacing": {
+                      "section-gap": "32px",
+                      "base": "8px",
+                      "margin-desktop": "64px",
+                      "margin-mobile": "20px",
+                      "container-padding": "24px",
+                      "stack-gap": "16px"
+              },
+              "fontFamily": {
+                      "headline-md": [
+                              "Quicksand", "sans-serif"
+                      ],
+                      "headline-lg": [
+                              "Quicksand", "sans-serif"
+                      ],
+                      "headline-xl": [
+                              "Quicksand", "sans-serif"
+                      ],
+                      "headline-lg-mobile": [
+                              "Quicksand", "sans-serif"
+                      ],
+                      "label-md": [
+                              "Be Vietnam Pro", "sans-serif"
+                      ],
+                      "body-md": [
+                              "Be Vietnam Pro", "sans-serif"
+                      ],
+                      "label-sm": [
+                              "Be Vietnam Pro", "sans-serif"
+                      ],
+                      "body-lg": [
+                              "Be Vietnam Pro", "sans-serif"
+                      ]
+              },
+              "fontSize": {
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-xl": [
+                              "40px",
+                              {
+                                      "lineHeight": "48px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "34px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .ambient-shadow {
+            box-shadow: 0px 12px 32px rgba(124, 93, 250, 0.08);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased min-h-screen pb-32">
+<!-- Main Container -->
+<main class="max-w-md mx-auto w-full px-margin-mobile pt-12 md:max-w-3xl md:px-margin-desktop md:pt-16">
+<!-- Header & Toggle -->
+<header class="mb-section-gap flex flex-col items-center">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-primary mb-6">History</h1>
+<div class="bg-surface-container-lowest rounded-full p-2 flex w-full max-w-sm ambient-shadow border border-white/60">
+<button class="flex-1 bg-primary-fixed text-primary rounded-full py-3 font-label-md text-label-md transition-all">
+                    Graphs
+                </button>
+<button class="flex-1 text-on-surface-variant rounded-full py-3 font-label-md text-label-md hover:bg-surface-container-low transition-all">
+                    Overview
+                </button>
+</div>
+</header>
+<!-- Successes Section -->
+<section class="mb-section-gap">
+<div class="flex justify-between items-center mb-stack-gap px-2">
+<h2 class="font-headline-md text-headline-md text-on-surface">Successes</h2>
+<button class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center ambient-shadow text-on-surface-variant hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined" style="font-size: 20px;">chevron_right</span>
+</button>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-container-padding ambient-shadow border border-white/60">
+<div class="flex items-end justify-between h-48 mb-4">
+<!-- Day 1 -->
+<div class="flex flex-col items-center gap-1 w-12">
+<div class="w-full h-10 bg-chart-mint rounded-squircle mb-1"></div>
+<div class="w-full h-10 bg-chart-mint rounded-squircle"></div>
+</div>
+<!-- Day 2 -->
+<div class="flex flex-col items-center gap-1 w-12">
+<div class="w-full h-10 bg-chart-mint rounded-squircle mb-1"></div>
+<div class="w-full h-10 bg-chart-mint rounded-squircle mb-1"></div>
+<div class="w-full h-10 bg-chart-mint rounded-squircle"></div>
+</div>
+<!-- Day 3 -->
+<div class="flex flex-col items-center gap-1 w-12">
+<div class="w-full h-10 bg-chart-mint rounded-squircle mb-1"></div>
+<div class="w-full h-10 bg-chart-mint rounded-squircle mb-1"></div>
+<div class="w-full h-10 bg-chart-mint rounded-squircle mb-1"></div>
+<div class="w-full h-10 bg-chart-mint rounded-squircle"></div>
+</div>
+<!-- Day 4 -->
+<div class="flex flex-col items-center gap-1 w-12">
+<div class="w-full h-10 bg-chart-mint rounded-squircle mb-1"></div>
+<div class="w-full h-10 bg-chart-mint rounded-squircle"></div>
+</div>
+<!-- Day 5 -->
+<div class="flex flex-col items-center gap-1 w-12">
+<div class="w-full h-10 bg-chart-mint rounded-squircle mb-1"></div>
+<div class="w-full h-10 bg-chart-mint rounded-squircle mb-1"></div>
+<div class="w-full h-10 bg-chart-mint rounded-squircle"></div>
+</div>
+</div>
+<!-- X Axis Labels -->
+<div class="flex justify-between px-1">
+<span class="font-label-sm text-label-sm text-outline w-12 text-center">01 Day</span>
+<span class="font-label-sm text-label-sm text-outline w-12 text-center">02 Day</span>
+<span class="font-label-sm text-label-sm text-on-surface w-12 text-center">03 Day</span>
+<span class="font-label-sm text-label-sm text-outline w-12 text-center">04 Day</span>
+<span class="font-label-sm text-label-sm text-outline w-12 text-center">05 Day</span>
+</div>
+</div>
+</section>
+<!-- Accidents Section -->
+<section class="mb-section-gap">
+<div class="flex justify-between items-center mb-stack-gap px-2">
+<h2 class="font-headline-md text-headline-md text-on-surface">Accidents</h2>
+<button class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center ambient-shadow text-on-surface-variant hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined" style="font-size: 20px;">chevron_right</span>
+</button>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-container-padding ambient-shadow border border-white/60">
+<div class="flex items-end justify-between h-48 mb-4 relative overflow-hidden">
+<!-- Layered Bars with Gradients -->
+<!-- Day 1 -->
+<div class="relative w-12 h-40">
+<div class="absolute bottom-0 w-full h-full bg-chart-cyan-light rounded-t-[20px] opacity-70"></div>
+<div class="absolute bottom-0 w-full h-[60%] bg-chart-cyan rounded-t-[20px]"></div>
+</div>
+<!-- Day 2 -->
+<div class="relative w-12 h-24">
+<div class="absolute bottom-0 w-full h-full bg-chart-cyan-light rounded-t-[20px] opacity-70"></div>
+<div class="absolute bottom-0 w-full h-[30%] bg-chart-cyan rounded-t-[20px]"></div>
+</div>
+<!-- Day 3 -->
+<div class="relative w-12 h-48">
+<div class="absolute bottom-0 w-full h-full bg-chart-cyan-light rounded-t-[20px] opacity-70"></div>
+<div class="absolute bottom-0 w-full h-[70%] bg-chart-cyan rounded-t-[20px]"></div>
+</div>
+<!-- Day 4 -->
+<div class="relative w-12 h-20">
+<div class="absolute bottom-0 w-full h-full bg-chart-cyan-light rounded-t-[20px] opacity-70"></div>
+<div class="absolute bottom-0 w-full h-[40%] bg-chart-cyan rounded-t-[20px]"></div>
+</div>
+<!-- Day 5 -->
+<div class="relative w-12 h-36">
+<div class="absolute bottom-0 w-full h-full bg-chart-cyan-light rounded-t-[20px] opacity-70"></div>
+<div class="absolute bottom-0 w-full h-[60%] bg-chart-cyan rounded-t-[20px]"></div>
+</div>
+</div>
+<!-- X Axis Labels -->
+<div class="flex justify-between px-1">
+<span class="font-label-sm text-label-sm text-outline w-12 text-center">01 Day</span>
+<span class="font-label-sm text-label-sm text-outline w-12 text-center">02 Day</span>
+<span class="font-label-sm text-label-sm text-on-surface w-12 text-center">03 Day</span>
+<span class="font-label-sm text-label-sm text-outline w-12 text-center">04 Day</span>
+<span class="font-label-sm text-label-sm text-outline w-12 text-center">05 Day</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="md:hidden glass-panel fixed bottom-6 left-1/2 -translate-x-1/2 flex justify-around items-center px-4 py-2 z-50 max-w-[320px] w-[calc(100%-40px)] rounded-full shadow-xl shadow-primary/10">
+<!-- Home (Inactive) -->
+<button class="text-on-surface-variant dark:text-outline-variant p-3 hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-colors rounded-full flex flex-col items-center justify-center">
+<span class="material-symbols-outlined" data-icon="home" data-weight="regular">home</span>
+</button>
+<!-- Chat (Inactive) -->
+<button class="text-on-surface-variant dark:text-outline-variant p-3 hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-colors rounded-full flex flex-col items-center justify-center">
+<span class="material-symbols-outlined" data-icon="chat_bubble" data-weight="regular">chat_bubble</span>
+</button>
+<!-- History (Active) -->
+<button class="bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-full p-3 scale-90 transition-all duration-200 ease-out flex flex-col items-center justify-center">
+<span class="material-symbols-outlined" data-icon="track_changes" style="font-variation-settings: 'FILL' 1;">track_changes</span>
+</button>
+<!-- Person (Inactive) -->
+<button class="text-on-surface-variant dark:text-outline-variant p-3 hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-colors rounded-full flex flex-col items-center justify-center">
+<span class="material-symbols-outlined" data-icon="person" data-weight="regular">person</span>
+</button>
+</nav>
+</body></html>

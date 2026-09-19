@@ -1,0 +1,216 @@
+<!DOCTYPE html><html class="h-full" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Five-Panel Comic - Step 5</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&amp;family=Quicksand:wght@600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#84231f",
+                        "on-primary-fixed-variant": "#481bc6",
+                        "tertiary": "#00647c",
+                        "surface-container-high": "#ebe6f3",
+                        "secondary": "#a53a34",
+                        "surface-container-low": "#f7f1ff",
+                        "on-secondary": "#ffffff",
+                        "inverse-on-surface": "#f4eefc",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#c9c4d7",
+                        "on-secondary-fixed": "#410002",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed": "#ffdad6",
+                        "secondary-container": "#fd7c72",
+                        "inverse-surface": "#312f39",
+                        "background": "#fdf8ff",
+                        "on-secondary-container": "#721513",
+                        "on-primary-container": "#fffbff",
+                        "surface": "#fdf8ff",
+                        "primary-container": "#7858f5",
+                        "error": "#ba1a1a",
+                        "on-background": "#1c1a24",
+                        "inverse-primary": "#cabeff",
+                        "on-primary-fixed": "#1c0062",
+                        "on-surface": "#1c1a24",
+                        "surface-container": "#f1ebf9",
+                        "tertiary-fixed": "#b7eaff",
+                        "surface-variant": "#e6e0ed",
+                        "tertiary-fixed-dim": "#4cd6ff",
+                        "on-tertiary-fixed": "#001f28",
+                        "on-error-container": "#93000a",
+                        "outline": "#797586",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed": "#e6deff",
+                        "surface-tint": "#613ede",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#ffb4ac",
+                        "primary-fixed-dim": "#cabeff",
+                        "tertiary-container": "#007f9c",
+                        "primary": "#5e3bdb",
+                        "surface-bright": "#fdf8ff",
+                        "surface-container-highest": "#e6e0ed",
+                        "on-tertiary-container": "#fafdff",
+                        "on-tertiary-fixed-variant": "#004e60",
+                        "on-surface-variant": "#484555",
+                        "surface-dim": "#ddd8e5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "stack-gap": "16px",
+                        "margin-desktop": "64px",
+                        "margin-mobile": "20px",
+                        "section-gap": "32px",
+                        "container-padding": "24px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Be Vietnam Pro"],
+                        "headline-xl": ["Quicksand"],
+                        "headline-lg-mobile": ["Quicksand"],
+                        "headline-lg": ["Quicksand"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "headline-md": ["Quicksand"],
+                        "body-lg": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-filled {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md h-full flex flex-col antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top Navigation (Shell suppressed for Guided Activity per rules, but using a custom header for the flow) -->
+<header class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-margin-mobile h-16 bg-surface/70 backdrop-blur-xl transition-all duration-300">
+<button aria-label="Go back" class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container-highest/50 transition-colors">
+<span class="material-symbols-outlined text-[24px]">close</span>
+</button>
+<div class="flex-1 px-4">
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden flex">
+<div class="h-full bg-primary rounded-full transition-all duration-500 ease-out" style="width: 100%;"></div>
+</div>
+<p class="text-center font-label-sm text-label-sm text-on-surface-variant mt-1">Step 5 of 5</p>
+</div>
+<button aria-label="Help" class="w-10 h-10 flex items-center justify-center rounded-full text-primary hover:bg-surface-container-highest/50 transition-colors">
+<span class="material-symbols-outlined text-[24px]">help_outline</span>
+</button>
+</header>
+<main class="flex-1 mt-16 mb-24 max-w-[1200px] w-full mx-auto px-margin-mobile md:px-margin-desktop py-stack-gap flex flex-col">
+<div class="text-center mb-stack-gap">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-primary mb-2">How do they feel?</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Draw the final expression.</p>
+</div>
+<!-- Drawing Canvas Area -->
+<div class="flex-1 bg-surface-container-lowest rounded-[32px] border border-white/40 shadow-[0px_12px_32px_rgba(124,93,250,0.08)] overflow-hidden relative flex flex-col min-h-[400px]">
+<div class="absolute top-4 left-4 right-4 flex justify-between pointer-events-none z-10">
+<div class="bg-surface/80 backdrop-blur-md rounded-full px-4 py-2 pointer-events-auto border border-outline-variant/30 flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[20px] text-tertiary">mood</span>
+<span class="font-label-sm text-label-sm text-on-surface">Panel 5</span>
+</div>
+<div class="flex gap-2 pointer-events-auto">
+<button class="w-10 h-10 bg-surface/80 backdrop-blur-md rounded-full flex items-center justify-center text-on-surface hover:bg-surface-container transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[20px]">undo</span>
+</button>
+<button class="w-10 h-10 bg-surface/80 backdrop-blur-md rounded-full flex items-center justify-center text-on-surface/50 cursor-not-allowed shadow-sm">
+<span class="material-symbols-outlined text-[20px]">redo</span>
+</button>
+</div>
+</div>
+<!-- Canvas Placeholder -->
+<div class="flex-1 bg-white relative cursor-crosshair flex items-center justify-center" id="drawing-area">
+<!-- Hint overlay -->
+<div class="text-center opacity-30 pointer-events-none select-none">
+<span class="material-symbols-outlined text-[64px] text-outline">draw</span>
+</div>
+<div class="absolute inset-0 bg-contain bg-center bg-no-repeat opacity-20 pointer-events-none" data-alt="A partially drawn comic panel character face, simple outlines, soft lighting, gentle pastel background texture indicating a digital drawing canvas. The character looks happy and relieved." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA3ZquJsov1An5bllDRWt8I2NTV_oPsqbWqlha0480ZJ22mfQ2NoN5KDvMZlEWLLCkrTRgRsKSHKvzgkC2TcZo1Vz3KXDVt7-xzP3AVj80nxgM6OBvuOWFY2RPrgaH_8XS8-rsQZcbh_VsJMgHmBbHeGZJpdW_Zkp6bdBY_D7AXvQG7WM7dWgQcQYj7hKdOOS4AkmgsLbVDwAAwWHhMwdkJNqp1hyHMSa5wRk_EKUCJZvvvMtv3AvZZ')"></div>
+</div>
+<!-- Toolbar -->
+<div class="bg-surface-container-low p-4 flex flex-col gap-4 border-t border-outline-variant/20">
+<div class="flex items-center justify-between">
+<div class="flex gap-3 overflow-x-auto pb-1 hide-scrollbar">
+<button class="w-12 h-12 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shadow-sm relative shrink-0">
+<span class="material-symbols-outlined icon-filled">brush</span>
+<span class="absolute bottom-0 right-0 w-3 h-3 bg-[#1c1a24] rounded-full border border-white"></span>
+</button>
+<button class="w-12 h-12 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center hover:bg-surface-variant transition-colors shrink-0">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="w-12 h-12 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center hover:bg-surface-variant transition-colors shrink-0">
+<span class="material-symbols-outlined">ink_highlighter</span>
+</button>
+<button class="w-12 h-12 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center hover:bg-surface-variant transition-colors shrink-0">
+<span class="material-symbols-outlined">ink_eraser</span>
+</button>
+</div>
+<div class="w-px h-8 bg-outline-variant/30 mx-2 shrink-0"></div>
+<button class="w-12 h-12 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center hover:bg-surface-variant transition-colors shrink-0">
+<span class="material-symbols-outlined">palette</span>
+</button>
+</div>
+<!-- Stroke Width slider -->
+<div class="flex items-center gap-4">
+<span class="w-2 h-2 bg-on-surface rounded-full"></span>
+<div class="flex-1 h-2 bg-surface-variant rounded-full relative">
+<div class="absolute left-0 top-0 h-full bg-primary rounded-full w-1/3"></div>
+<div class="absolute left-1/3 top-1/2 -translate-y-1/2 w-4 h-4 bg-primary rounded-full shadow-md cursor-pointer hover:scale-110 transition-transform"></div>
+</div>
+<span class="w-4 h-4 bg-on-surface rounded-full"></span>
+</div>
+</div>
+</div>
+<!-- Idea Drawer Handle (Mock) -->
+<div class="mt-8 mx-auto w-full max-w-sm bg-surface-container-low rounded-t-3xl border-t border-x border-white/40 p-4 shadow-[0px_-8px_24px_rgba(124,93,250,0.05)] cursor-pointer group flex flex-col items-center hover:bg-surface-container transition-colors pb-8 -mb-12 relative z-10">
+<div class="w-12 h-1.5 bg-outline-variant/50 rounded-full mb-3 group-hover:bg-primary/50 transition-colors"></div>
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined">lightbulb</span>
+<span class="font-label-md text-label-md">Need an idea?</span>
+</div>
+</div>
+</main>
+<!-- Bottom Action Area -->
+<div class="fixed bottom-0 left-0 w-full p-4 bg-gradient-to-t from-background via-background to-transparent z-40 pb-8 pt-12">
+<div class="max-w-md mx-auto">
+<button class="w-full bg-primary text-on-primary font-label-md text-label-md py-4 px-6 rounded-full shadow-[0px_8px_16px_rgba(94,59,219,0.2)] hover:bg-primary-container hover:text-on-primary-container transition-all hover:scale-[1.02] flex items-center justify-center gap-2">
+<span>I'm done</span>
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</button>
+</div>
+</div>
+<style>
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</body></html>

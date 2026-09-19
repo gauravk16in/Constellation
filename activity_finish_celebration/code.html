@@ -1,0 +1,213 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>Finish Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Quicksand:wght@600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#fdf8ff",
+                        "on-secondary-fixed": "#410002",
+                        "inverse-primary": "#cabeff",
+                        "surface-container-high": "#ebe6f3",
+                        "primary-container": "#7858f5",
+                        "primary": "#5e3bdb",
+                        "surface-tint": "#613ede",
+                        "surface-variant": "#e6e0ed",
+                        "surface-container-low": "#f7f1ff",
+                        "tertiary-container": "#007f9c",
+                        "outline-variant": "#c9c4d7",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#004e60",
+                        "on-primary-fixed": "#1c0062",
+                        "on-surface-variant": "#484555",
+                        "tertiary-fixed-dim": "#4cd6ff",
+                        "inverse-surface": "#312f39",
+                        "primary-fixed-dim": "#cabeff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-highest": "#e6e0ed",
+                        "on-background": "#1c1a24",
+                        "inverse-on-surface": "#f4eefc",
+                        "primary-fixed": "#e6deff",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#721513",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#001f28",
+                        "on-primary-fixed-variant": "#481bc6",
+                        "on-secondary-fixed-variant": "#84231f",
+                        "on-primary-container": "#fffbff",
+                        "tertiary-fixed": "#b7eaff",
+                        "secondary-container": "#fd7c72",
+                        "secondary": "#a53a34",
+                        "on-error-container": "#93000a",
+                        "on-surface": "#1c1a24",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#00647c",
+                        "secondary-fixed": "#ffdad6",
+                        "surface-bright": "#fdf8ff",
+                        "on-tertiary-container": "#fafdff",
+                        "outline": "#797586",
+                        "surface-container": "#f1ebf9",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#ffb4ac",
+                        "surface-dim": "#ddd8e5",
+                        "background": "#fdf8ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "20px",
+                        "base": "8px",
+                        "margin-desktop": "64px",
+                        "section-gap": "32px",
+                        "stack-gap": "16px",
+                        "container-padding": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Quicksand"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "headline-lg": ["Quicksand"],
+                        "headline-lg-mobile": ["Quicksand"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "headline-xl": ["Quicksand"],
+                        "body-lg": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            animation: fall 3s infinite linear;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+        
+        .pulse-shadow {
+            animation: pulse-shadow 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes pulse-shadow {
+            0% { box-shadow: 0 0 0 0 rgba(120, 88, 245, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(120, 88, 245, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(120, 88, 245, 0); }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0px 12px 32px rgba(124, 93, 250, 0.08);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col items-center justify-center relative overflow-hidden font-body-md selection:bg-primary-container selection:text-on-primary-container">
+<!-- Confetti Container -->
+<div class="absolute inset-0 pointer-events-none z-0" id="confetti-container"></div>
+<!-- Main Content Container -->
+<main class="w-full max-w-md mx-auto px-margin-mobile flex flex-col items-center justify-center relative z-10 space-y-section-gap pt-12 pb-24">
+<!-- Top App Bar (Suppressed per "Bottom Navigation: None (focused flow)", but keeping a clean header area if needed, omitted here to focus on the content canvas as instructed) -->
+<!-- Celebration Header -->
+<div class="text-center space-y-base animate-[fadeInDown_0.6s_ease-out]">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-primary">You made a field note!</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Great job keeping track.</p>
+</div>
+<!-- Illustration / Badge -->
+<div class="relative w-64 h-64 animate-[bounceIn_0.8s_cubic-bezier(0.68,-0.55,0.265,1.55)_0.2s_both]">
+<img class="w-full h-full object-contain filter drop-shadow-[0_12px_32px_rgba(124,93,250,0.2)]" data-alt="A highly polished, premium 3D illustration of a vibrant, glossy achievement badge or star character bursting with energy. The style is Soft Minimalism meets Glassmorphism, using a refined color palette of deep primary violet and soft pastel mint, floating against a clean, light mode background. The lighting is bright and studio-quality, creating a celebratory and luxurious mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmBDZH9LWr-GSaD1JiH0gIy-CV9Gvut6Oz2Sa3mHELyrYSxPtdpaQqGnnkGJXC1e01iWdQATjgGr7PvYK5lQZhsZmxb_scWswj-Z8cZhRq9WfrqzhmmALfrxDOo8bl2I-RZIjKOtBanTL1fNFrLr1PqgORnnah_ya87X1NiRiBBdJO9XrnpESX1ykD_kNuqhDMdaSVRAt4WWK7SSte2iOgKQ_suHMJ92eXK9juadP0SBGwLNkwaVMn">
+</div>
+<!-- Action Prompt -->
+<div class="glass-card w-full rounded-[32px] p-container-padding flex flex-col items-center space-y-stack-gap animate-[fadeInUp_0.6s_ease-out_0.4s_both]">
+<h2 class="font-headline-md text-headline-md text-on-surface text-center mb-4">What happened today?</h2>
+<div class="flex flex-col w-full gap-stack-gap">
+<!-- Option 1: Show -->
+<button class="w-full flex items-center justify-between p-4 rounded-full bg-surface-container-low border border-outline-variant/30 hover:bg-primary-container hover:text-on-primary-container hover:border-primary-container transition-all duration-300 group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-tertiary-container/10 flex items-center justify-center group-hover:bg-on-primary-container/20 transition-colors">
+<span class="material-symbols-outlined text-tertiary group-hover:text-on-primary-container" style="font-variation-settings: 'FILL' 1;">photo_camera</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface group-hover:text-on-primary-container">Show</span>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-on-primary-container">chevron_right</span>
+</button>
+<!-- Option 2: Tell -->
+<button class="w-full flex items-center justify-between p-4 rounded-full bg-surface-container-low border border-outline-variant/30 hover:bg-primary-container hover:text-on-primary-container hover:border-primary-container transition-all duration-300 group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-secondary-container/10 flex items-center justify-center group-hover:bg-on-primary-container/20 transition-colors">
+<span class="material-symbols-outlined text-secondary group-hover:text-on-primary-container" style="font-variation-settings: 'FILL' 1;">mic</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface group-hover:text-on-primary-container">Tell</span>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-on-primary-container">chevron_right</span>
+</button>
+<!-- Option 3: Done -->
+<button class="w-full flex items-center justify-center gap-2 p-4 rounded-full bg-primary text-on-primary shadow-[0px_12px_32px_rgba(124,93,250,0.2)] hover:bg-surface-tint hover:shadow-lg transition-all duration-300 mt-2 pulse-shadow">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label-md text-label-md">Done</span>
+</button>
+</div>
+</div>
+</main>
+<script>
+        // Simple Confetti Generator
+        function createConfetti() {
+            const colors = ['#7858f5', '#cabeff', '#007f9c', '#fd7c72', '#b7eaff'];
+            const container = document.getElementById('confetti-container');
+            const numConfetti = 50;
+
+            for (let i = 0; i < numConfetti; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                
+                // Random properties
+                const left = Math.random() * 100;
+                const animDuration = Math.random() * 3 + 2;
+                const animDelay = Math.random() * 2;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const size = Math.random() * 8 + 4;
+
+                confetti.style.left = `${left}%`;
+                confetti.style.top = '-20px';
+                confetti.style.backgroundColor = color;
+                confetti.style.width = `${size}px`;
+                confetti.style.height = `${size * (Math.random() > 0.5 ? 2 : 1)}px`;
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.animationDuration = `${animDuration}s`;
+                confetti.style.animationDelay = `${animDelay}s`;
+
+                container.appendChild(confetti);
+            }
+        }
+
+        // Run confetti on load
+        window.addEventListener('DOMContentLoaded', createConfetti);
+    </script>
+</body></html>

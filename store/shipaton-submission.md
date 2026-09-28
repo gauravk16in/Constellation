@@ -2,24 +2,24 @@
 
 ## One-line pitch
 
-Constellation turns a phone into a brief launchpad for story-led, safe real-world missions—and turns what a child actually does into a personal night sky.
+Constellation lets children play with an idea, try a related activity nearby, and remember both the digital experiment and their reported real-world discovery.
 
 ## What is original
 
-Most children’s apps reward returning to the screen. Constellation’s successful session ends when the child leaves it. Twenty-five story signals live inside six quiet instruments: Nature Compass, Maker’s Workbench, Story Archive, Discovery Lens, Everyday Station, and Courage Path. Completion is not XP; it is a truthful learning memory and one gold star derived from a real-world action.
+Pocket Planet offers a paper-bridge model, a light-and-shadow lesson, and simpler story, sorting and movement-planning tools. The real-world library has 25 authored missions across six curiosity areas. Digital creations remain in My Finds; a child-reported physical completion can light a gold star. The app does not verify physical completion or assess mastery. Independent content review and family testing are still required before public claims.
 
 ## Two-minute demo spine
 
 | Time | Show | Say |
 |---|---|---|
-| 0:00–0:12 | Opening promise and one constellation visual | “Most technology competes for children’s attention. Constellation competes for their curiosity.” |
-| 0:12–0:27 | Guardian setup and context | Explain local nickname/age band, safety boundaries, and what fits now. |
-| 0:27–0:55 | One flagship hook and interaction | Show a meaningful prediction or safety decision—not a screen tour. |
-| 0:55–1:08 | Midnight phone-down screen | “This is the product’s most important button: I’m going to try it.” |
-| 1:08–1:28 | Return, reveal, saved star | Show one observation, modest learning memory, atomic gold moment. |
-| 1:28–1:43 | Six worlds / 25 signals / age variants | Establish breadth without opening every mission. |
-| 1:43–1:56 | Protected RevenueCat paywall and restore | Show useful free tier, Family breadth, annual trial, restore, and no child pressure. |
-| 1:56–2:00 | Public Play listing | End on the public app and the promise. |
+| 0:00–0:12 | Move the light and show its shadow changing | “A little world shaped by your big ideas.” |
+| 0:12–0:27 | Predict and compare two light positions | Show the child doing something specific. |
+| 0:27–0:55 | Explain, solve Pip's shade challenge, save digital find | Explain that the model is not a forecast of outdoor shadows. |
+| 0:55–1:08 | Try it nearby, safety and context checks | Show the real-world path without implying automatic verification. |
+| 1:08–1:28 | Phone-down cue, edited return, child-reported star | Label this as a later return. |
+| 1:28–1:43 | Digital find beside real-world star | Keep their origins explicit. |
+| 1:43–1:56 | Protected RevenueCat paywall and restore in a real Play build | Do not record this segment before device billing is verified. |
+| 1:56–2:00 | Verified public Play listing | End on the public app only after publication. |
 
 ## Award evidence
 
@@ -39,4 +39,3 @@ Most children’s apps reward returning to the screen. Constellation’s success
 - [ ] At least one real purchase runs through RevenueCat.
 - [ ] Privacy, terms, safety, and support URLs are live.
 - [ ] Submission claims match the released build; no “AI-generated missions,” mastery, or verified-learning claim.
-

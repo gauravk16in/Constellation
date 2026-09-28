@@ -1,4 +1,5 @@
 import type { AgeBand } from '@/types/constellation';
+import type { PathCommand, PathFind, PathGameSession, PathOutcome } from '@/types/path-games';
 
 export type PlayMode = 'digital' | 'real-world';
 export type PaperShape = 'flat' | 'folded' | 'accordion';
@@ -39,9 +40,13 @@ export type PlanetData = {
   version: 1; revision: number; session: GameSession | null;
   artifacts: CreativeArtifact[]; outcomes: GameOutcome[];
   replacement: { previous: CreativeArtifact; replacementId: string } | null;
+  pathSession?: PathGameSession | null;
+  pathFinds?: PathFind[];
+  pathOutcomes?: PathOutcome[];
+  pathReplacement?: { previous: PathFind; replacementId: string } | null;
 };
-export type PlanetCommand =
-  | { type: 'start'; id: string; scenarioId: PaperScenario; replaceSessionId?: string }
+export type PlanetCommand = PathCommand
+  | { type: 'start'; id: string; scenarioId: PaperScenario; replaceSessionId?: string; replacePathSessionId?: string; editArtifactId?: string }
   | { type: 'act'; sessionId: string; action: PaperAction }
   | { type: 'finish'; sessionId: string; replaceArtifactId?: string }
   | { type: 'undo-replacement' }

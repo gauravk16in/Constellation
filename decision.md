@@ -451,8 +451,30 @@ These items do not block the first screen:
 - Confirm whether automatic weather creates enough value to justify any region input.
 # Pocket Planet implementation lock — 2026-09-13
 
+## Audit correction lock — 2026-09-27
+
+Preserve the existing Little Landing lavender chrome, Quicksand, cut-paper art, near-black actions and 48dp controls. Borrow only the already-researched Tinybop manipulation/observation pattern and Toca ownership pattern: feature Shadow; edit actual saved configurations. No redesign or additional worlds. The original connected-C vector replaces template app assets; midnight/off-white/star gold identify the brand, not an unearned in-game reward. The logo skill is applied as a production replacement, not a new-brand exploration.
+
+Learning memories describe only recorded actions; retired revision claims are stripped on read. Storyboard and movement-plan labels replace unsupported simulation promises. Physical Shadow follow-up reads the saved model and invites a spoken comparison, never records it or assumes real-world success. Production EAS builds require attributable content, policy, family-pilot and billing evidence; automated tests cannot supply those attestations. Preview builds remain available. Store publication and purchases are not authorized or claimed by this local fix pass.
+
 The user-approved Pocket Planet plan supersedes earlier real-world-only, no-character, and form-first Home decisions. Digital creation and reported physical exploration are equally valuable, explicitly distinguished origins. Gold remains exclusive to saved real-world completion.
 
 Reference lock: original layered cut-paper Little Landing, Tinybop-inspired manipulable environments and Toca-inspired ownership; Quicksand, lavender chrome, stronger environmental sky/foliage/coral, 48dp controls, finite result motion and tap alternatives. Pip is an authored paper courier, never a chat companion or dependent pet.
 
 Delivery gate: implement the complete Paper Post vertical slice and shared local game foundation first. Observe five children before building Shadow and Theatre. Those places must not masquerade as working games before implementation. No store publication or family-test claims follow from a successful export.
+
+## Playable curiosity paths — 2026-09-26
+
+The user's explicit implementation request expands the playable prototype to Talk & Connect, Test & Discover, Everyday Skills, and Move & Be Brave. Family observation remains a release validation gate; development of these paths is now authorized. The visual reference remains Little Landing's Quicksand, lavender chrome and original cut-paper scenes. Tinybop's direct manipulation and physical follow-ups inform cause-and-effect play; Duolingo's short trials and immediate, specific feedback inform challenge pacing. Children may revise and replay without scores, failure states, streaks or locked paths. Each digital creation is separate from the reported real-world star. Physical handoffs continue through catalog eligibility and guardian boundaries.
+
+## Borrow a Shadow learning pilot — 2026-09-26
+
+The first playable paths exposed a learning-depth gap: a single test could save a shadow creation without prediction, comparison, explanation, or independent application. Rebuild only Borrow a Shadow as a complete, resumable lesson before changing the other paths. A child predicts the shadow's side, reveals and manipulates a flashlight model, records observations with light on both sides, explains the opposite-side relationship with calm retry feedback, and solves a fresh shade problem. The reviewed outdoor Shadow Tracing mission remains a separate, eligibility-gated choice; digital completion does not award a gold star or verify outdoor learning.
+
+Reference lock: keep the Little Landing lavender/Quicksand/cut-paper scene, sky and foliage within the play surface, near-black outlines, off-white controls, 48dp touch targets, and no gold until a physical mission is completed. NASA's [Bear's Shadow](https://science.nasa.gov/resource/exploring-earth-bears-shadow/) supplies the movable-flashlight teaching model; [Duolingo's method](https://blog.duolingo.com/duolingo-teaching-method/) supplies the short progressive practice and specific feedback pattern, not its currencies or streaks. The illustrated light and shadow respond to direct manipulation; labeled tap controls remain equivalent for accessibility. No camera, microphone, location, AI tutor, scoring, or new dependency.
+
+## Teammate feature adaptation — 2026-09-28
+
+The teammate's [Constellation- repository](https://github.com/SRINATHsupes/Constellation-) supplies two useful interaction patterns: drawing with a visible guide, trying again from memory, then creating freely; and assembling machine parts before running a model to observe a relationship. Constellation adapts these as Shape Studio and Gear Table inside the existing Maker's Workbench. It does not import the teammate's separate 3D universe, school-subject levels, accuracy threshold, scores, locked progression, or purple UI. Those would expand navigation and dependencies while weakening the current family/real-world loop.
+
+Reference lock: lavender app canvas, Quicksand, near-black lines/actions, off-white paper drawing board, sky-coloured model stage, continuous corners, 24-point edge spacing, and 48-point controls. Gold is not used for digital practice. Shapes can be drawn by touch or added with labeled controls; gear parts can be selected and placed without dragging. Every child can use an unscored phone-down paper prompt; the full three-colour catalog mission appears only for an already-entitled Family profile and retains its eligibility/guardian boundaries. The gear table offers an optional grown-up-guided observation prompt, not a new catalog mission or proof of real-world learning. These sandbox drafts are deliberately session-local and award no star; future persistence requires family-tested value and a separate data decision.

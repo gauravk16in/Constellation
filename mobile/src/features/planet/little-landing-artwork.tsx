@@ -47,7 +47,7 @@ export function LittleLandingArtwork({ state, onFold, onTest, disabled, overview
   const left = wide ? 102 : 132;
   const right = wide ? 302 : 272;
   return <View onLayout={(event) => setWidth(event.nativeEvent.layout.width)} style={{ width: '100%', aspectRatio: 0.93, overflow: 'hidden', borderRadius: 32, borderCurve: 'continuous', backgroundColor: p.sky }}>
-    <Svg accessibilityElementsHidden importantForAccessibility="no-hide-descendants" width="100%" height="100%" viewBox="0 0 400 430">
+    <Svg width="100%" height="100%" viewBox="0 0 400 430">
       <Rect width="400" height="430" fill={p.sky} />
       <Circle cx="311" cy="60" r="28" fill={p.cloud} />
       <Path d="M-20 68C15 55 33 78 56 66C79 47 106 53 113 73C138 65 155 80 157 88H-20ZM232 120C249 104 273 110 284 114C304 88 335 100 341 116C366 109 391 121 410 136H232Z" fill={p.cloud} opacity="0.8" />
@@ -72,7 +72,7 @@ export function LittleLandingArtwork({ state, onFold, onTest, disabled, overview
       {overview ? artifacts.filter((a) => a.position !== 'workshop').slice(-2).map((a) => <G key={a.id} transform={a.position === 'hill' ? 'translate(230 187) scale(.23)' : 'translate(316 369) scale(.18)'}><BridgeDrawing shape={a.shape} color={bridgeColors[a.color]} /></G>) : null}
       <Path d="M33 396L62 390M74 394L93 389M317 412L339 405" stroke={p.grassLight} strokeWidth="3" strokeLinecap="round" />
     </Svg>
-    <Animated.View pointerEvents="none" style={[{ position: 'absolute', left: '12%', top: '47%', width: '21%', aspectRatio: 1.2 }, birdStyle]}><PaperBird /></Animated.View>
+    <Animated.View style={[{ position: 'absolute', left: '12%', top: '47%', width: '21%', aspectRatio: 1.2, pointerEvents: 'none' }, birdStyle]}><PaperBird /></Animated.View>
     {onFold ? <Pressable accessibilityRole="button" accessibilityLabel="Paper bridge. Tap to change its fold." disabled={disabled} onPress={onFold} style={({ pressed }) => ({ position: 'absolute', left: '25%', top: '65%', width: '51%', height: '13%', minHeight: 48, opacity: pressed ? 0.3 : 1, backgroundColor: pressed ? p.paper : 'transparent', borderRadius: 20 })} /> : null}
     {onTest ? <Pressable accessibilityRole="button" accessibilityLabel={overview ? 'Send Pip across your bridge' : 'Test the parcel on this bridge'} disabled={disabled} onPress={onTest} style={({ pressed }) => ({ position: 'absolute', left: state.result?.holds ? '76%' : '30%', top: '53%', width: '20%', height: '13%', minWidth: 48, minHeight: 48, opacity: pressed ? 0.3 : 1, backgroundColor: pressed ? p.paper : 'transparent', borderRadius: 20 })} /> : null}
   </View>;

@@ -1,4 +1,6 @@
 import type { AgeBand } from '@/types/constellation';
+import { applyPathCommand, PATH_GAMES, MOVE_CARDS, SORT_OBJECTS, SORT_RULES, STORY_OBJECTS, shadowResult } from '@/features/planet/path-game-engine';
+import { hasComparedBothSides, shadowProjection } from '@/features/planet/shadow-lesson';
 import type { PaperAction, PaperConfiguration, PaperScenario, PaperState, PlanetCommand, PlanetData } from '@/types/pocket-planet';
 
 export const PAPER_SCENARIOS = [
@@ -73,16 +75,25 @@ function evidenceFor(state: PaperState) {
 export function applyPlanetCommand(data: PlanetData, command: PlanetCommand, context: {
   profileId: string; ageBand: AgeBand; family: boolean; now: string;
 }): PlanetData {
+  if (command.type === 'start-path' || command.type === 'act-path' || command.type === 'introduce-path' || command.type === 'finish-path' || command.type === 'undo-path-replacement') {
+    return parsePlanet(JSON.stringify(applyPathCommand(data, command, context)));
+  }
   const next = JSON.parse(JSON.stringify(data)) as PlanetData;
   const session = next.session;
   if (command.type === 'start') {
+    if (next.pathSession && next.pathSession.id !== command.replacePathSessionId) throw new Error('Resume your current digital game or choose to replace its draft.');
     const scenario = PAPER_SCENARIOS.find((item) => item.id === command.scenarioId);
     if (!scenario) throw new Error('This game scenario is unavailable.');
     if (session && session.id !== command.replaceSessionId) throw new Error('Resume your game or choose to replace its draft.');
     if (scenario.family && !context.family) throw new Error('This scenario needs a Family membership. Free play is still available.');
     if (next.outcomes.some((item) => item.sessionId === command.id)) throw new Error('This game was already saved.');
+    const artifact = command.editArtifactId ? next.artifacts.find((item) => item.id === command.editArtifactId) : undefined;
+    if (command.editArtifactId && (!artifact || command.scenarioId !== 'sandbox')) throw new Error('Reopen your saved bridge to edit it in free play.');
+    const state = initialPaper(command.scenarioId);
+    if (artifact) Object.assign(state, { shape: artifact.shape, color: artifact.color, position: artifact.position });
+    next.pathSession = null;
     next.session = { id: command.id, profileId: context.profileId, gameId: 'paper-post', gameVersion: 1,
-      scenarioId: command.scenarioId, ageBand: context.ageBand, state: initialPaper(command.scenarioId), updatedAt: context.now };
+      scenarioId: command.scenarioId, ageBand: context.ageBand, state, updatedAt: context.now };
   } else if (command.type === 'act') {
     if (!session || session.id !== command.sessionId || session.profileId !== context.profileId) throw new Error('Reopen your current game before changing it.');
     if (session.ageBand === '6-7' && !session.state.guardianIntroduced && command.action.type !== 'introduce') throw new Error('Read the introduction with a grown-up first.');
@@ -140,6 +151,53 @@ export function parsePlanet(value: string | null): PlanetData {
       if (!config(s.state) || !color(s.state.color) || !position(s.state.position) || typeof s.state.guardianIntroduced !== 'boolean' || !Array.isArray(s.state.trials) || s.state.trials.length > 24 || s.state.trials.some((v) => !config(v) || v.holds !== paperHolds(v))) throw new Error();
       if (s.state.result && (!config(s.state.result) || s.state.result.holds !== paperHolds(s.state.result) || s.state.result.shape !== s.state.shape || s.state.result.gap !== s.state.gap || s.state.result.parcels !== s.state.parcels)) throw new Error();
     }
+    const validShadowLesson = (value: unknown): boolean => {
+      if (!value || typeof value !== 'object') return false;
+      const lesson = value as Record<string, unknown>;
+      const phase = String(lesson.phase);
+      const observations = lesson.observations;
+      return ['predict', 'explore', 'compare', 'challenge', 'complete'].includes(phase) &&
+        Number.isInteger(lesson.lightPosition) && Number(lesson.lightPosition) >= 0 && Number(lesson.lightPosition) <= 100 &&
+        (lesson.prediction === null || ['left', 'right', 'under'].includes(String(lesson.prediction))) &&
+        Array.isArray(observations) && observations.length <= 12 && observations.every((position) => Number.isInteger(position) && position >= 0 && position <= 100) &&
+        (lesson.explanation === null || ['opposite', 'same', 'unrelated'].includes(String(lesson.explanation))) &&
+        Number.isInteger(lesson.explanationAttempts) && Number(lesson.explanationAttempts) >= 0 &&
+        Number.isInteger(lesson.challengeAttempts) && Number(lesson.challengeAttempts) >= 0 &&
+        (phase === 'predict' || lesson.prediction !== null) &&
+        (!['compare', 'challenge', 'complete'].includes(phase) || hasComparedBothSides(observations)) &&
+        (!['challenge', 'complete'].includes(phase) || lesson.explanation === 'opposite') &&
+        (phase !== 'complete' || (Number(lesson.challengeAttempts) > 0 && shadowProjection(Number(lesson.lightPosition)).coversMat));
+    };
+    const validPathState = (value: unknown, gameId: string): boolean => {
+      if (!value || typeof value !== 'object') return false;
+      const state = value as Record<string, unknown>;
+      if (gameId === 'object-theatre') return state.kind === 'story' && Array.isArray(state.scenes) && state.scenes.length === 3 &&
+        state.scenes.every((scene: Record<string, unknown>) => (scene.object === null || STORY_OBJECTS.includes(scene.object as typeof STORY_OBJECTS[number])) &&
+          ['arrive', 'hide', 'find'].includes(String(scene.action)) && ['workshop', 'hill', 'theatre'].includes(String(scene.backdrop))) &&
+        [0, 1, 2].includes(Number(state.activeScene)) && typeof state.played === 'boolean' && Number.isInteger(state.playCount) && Number(state.playCount) >= 0;
+      if (gameId === 'borrow-a-shadow') return state.kind === 'shadow' && [0, 1, 2, 3, 4].includes(Number(state.light)) && [0, 1, 2, 3, 4].includes(Number(state.mat)) &&
+        ['tree', 'post', 'parcel'].includes(String(state.object)) && Array.isArray(state.trials) && state.trials.length <= 12 &&
+        state.trials.every((trial: Record<string, unknown>) => [0, 1, 2, 3, 4].includes(Number(trial.light)) && [0, 1, 2, 3, 4].includes(Number(trial.mat)) && ['tree', 'post', 'parcel'].includes(String(trial.object)) && trial.shade === shadowResult(trial as Parameters<typeof shadowResult>[0]).shade) &&
+        (state.lesson === undefined || validShadowLesson(state.lesson));
+      if (gameId === 'parcel-room') return state.kind === 'sort' && SORT_RULES.includes(state.rule as typeof SORT_RULES[number]) &&
+        !!state.groups && typeof state.groups === 'object' && SORT_OBJECTS.every((item) => [null, 'left', 'right'].includes((state.groups as Record<string, unknown>)[item] as null | 'left' | 'right')) &&
+        typeof state.tested === 'boolean' && Number.isInteger(state.tests) && Number(state.tests) >= 0;
+      if (gameId === 'delivery-path') return state.kind === 'move' && Array.isArray(state.sequence) && state.sequence.length === 3 &&
+        state.sequence.every((card: string) => MOVE_CARDS.includes(card as typeof MOVE_CARDS[number])) && Number.isInteger(state.runs) && Number(state.runs) >= 0 && [true, false, null].includes(state.steady as boolean | null);
+      return false;
+    };
+    const pathSession = data.pathSession;
+    if (pathSession && (!pathSession.id || !pathSession.profileId || pathSession.version !== 1 || typeof pathSession.guardianIntroduced !== 'boolean' || !['6-7', '8-9', '10-12'].includes(pathSession.ageBand) || !(pathSession.gameId in PATH_GAMES) || !validPathState(pathSession.state, pathSession.gameId))) throw new Error();
+    if (data.session && pathSession) throw new Error();
+    if (data.pathFinds !== undefined && (!Array.isArray(data.pathFinds) || data.pathFinds.length > 4 || new Set(data.pathFinds.map((find) => find.gameId)).size !== data.pathFinds.length || data.pathFinds.some((find) => !find.id || !(find.gameId in PATH_GAMES) || !validPathState(find.state, find.gameId)))) throw new Error();
+    // Retire overclaims from already-saved outcomes, not just newly created memories.
+    if (Array.isArray(data.pathOutcomes)) for (const outcome of data.pathOutcomes) {
+      if (!Array.isArray(outcome.evidence)) throw new Error();
+      outcome.evidence = outcome.evidence.filter((text) => !['Replayed the story after changing a scene.', 'Revised the grouping and tested it again.', 'Changed the movement plan and tried it again.'].includes(text)).map((text) =>
+        text === 'Arranged three scenes and played a story.' ? 'Arranged three scenes and opened a storyboard.' : text === 'Arranged three moves and ran the route.' ? 'Chose three movements and reviewed a plan.' : text);
+    }
+    const approvedEvidence = ['Arranged three scenes and opened a storyboard.', 'Chose three movements and reviewed a plan.', 'Moved a light and tested where the shadow fell.', 'Compared a longer and shorter shadow.', 'Predicted where a flashlight-model shadow would fall.', 'Compared shadows with the light on both sides of an object.', 'Moved the light to shade a target in the model.', 'Placed six objects using a chosen grouping rule.'];
+    if (data.pathOutcomes !== undefined && (!Array.isArray(data.pathOutcomes) || data.pathOutcomes.some((outcome) => !outcome.id || !(outcome.gameId in PATH_GAMES) || !Array.isArray(outcome.evidence) || outcome.evidence.length > 3 || outcome.evidence.some((statement) => !approvedEvidence.includes(statement))))) throw new Error();
     return data;
   } catch { throw new Error('Your saved planet could not be read. Nothing has been replaced. Try reopening the app.'); }
 }

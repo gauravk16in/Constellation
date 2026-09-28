@@ -15,6 +15,8 @@ import { ProtectedStarArtwork } from '@/screens/guardian/protected-star-artwork'
 import { colors, fontFamilies, motion, radius, spacing } from '@/theme';
 
 const MEMBERSHIP_ROWS = [
+  { label: 'Paper Post and Shadow experiments; creative planning tools', free: 'Included', family: 'Included' },
+  { label: 'Extra Paper Post challenges', free: '—', family: '2 prompts' },
   { label: 'Reviewed real-world missions', free: `${FREE_MISSION_COUNT} flagships`, family: `All ${EXPERIENCE_CATALOG.length}` },
   { label: 'Curiosity areas', free: 'All 6', family: 'All 6' },
   { label: 'Constellation and learning memories', free: 'Included', family: 'Included' },
@@ -63,7 +65,7 @@ export function MembershipScreen() {
           <ProtectedStarArtwork compact />
           <View style={styles.heroCopy}>
             <ThemedText accessibilityRole="header" style={styles.heading} variant="display">More ways to explore. Still no pressure.</ThemedText>
-            <ThemedText style={styles.body} variant="body">The free Constellation opens every curiosity area. Family membership expands the reviewed mission library—not the amount of time a child spends on the phone.</ThemedText>
+            <ThemedText style={styles.body} variant="body">Try light and shadow, build paper bridges, and plan stories together for free. Family adds more real-world activities—such as sound mapping, rhythm and everyday projects—plus two extra Paper Post challenges. Saved creations remain yours when membership ends.</ThemedText>
           </View>
         </View>
 
@@ -104,7 +106,7 @@ export function MembershipScreen() {
           </View>
         )}
 
-        {configurationStatus !== 'ready' ? <View accessibilityLiveRegion="polite" style={styles.noticeSurface}><ThemedText style={styles.noticeTitle} variant="label">Store connection not configured in this build</ThemedText><ThemedText style={styles.smallBody} variant="caption">The six free flagship missions remain available. Add the platform’s public RevenueCat key to test plans and purchases.</ThemedText></View> : null}
+        {configurationStatus !== 'ready' ? <View accessibilityLiveRegion="polite" style={styles.noticeSurface}><ThemedText style={styles.noticeTitle} variant="label">Purchases are unavailable in this version</ThemedText><ThemedText style={styles.smallBody} variant="caption">Free experiments, saved creations and the six free missions remain available. No purchase has been made.</ThemedText></View> : null}
         {message ? <ThemedText accessibilityLiveRegion="polite" style={styles.message} variant="caption">{message}</ThemedText> : null}
         {error ? <ThemedText accessibilityLiveRegion="polite" style={styles.error} variant="caption">{error}</ThemedText> : null}
       </Animated.View>

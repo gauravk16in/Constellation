@@ -4,16 +4,16 @@
   "version": "1.0.0",
   "dependencies": {
     "@expo-google-fonts/quicksand": "^0.4.1",
-    "@expo/ui": "~57.0.19",
-    "expo": "~57.0.24",
+    "@expo/ui": "~57.0.20",
+    "expo": "~57.0.25",
     "expo-constants": "~57.0.19",
     "expo-dev-client": "~57.0.19",
     "expo-device": "~57.0.2",
     "expo-font": "~57.0.2",
-    "expo-glass-effect": "~57.0.3",
+    "expo-glass-effect": "~57.0.4",
     "expo-image": "~57.0.5",
-    "expo-linking": "~57.0.10",
-    "expo-router": "~57.0.22",
+    "expo-linking": "~57.0.11",
+    "expo-router": "~57.0.23",
     "expo-splash-screen": "~57.0.9",
     "expo-sqlite": "~57.0.3",
     "expo-status-bar": "~57.0.1",
@@ -41,6 +41,9 @@
     "typescript": "~6.0.3"
   },
   "scripts": {
+    "check:release": "tsx scripts/check-release.ts",
+    "check:submission": "tsx scripts/check-release.ts --submission",
+    "eas-build-post-install": "tsx scripts/check-release.ts --build",
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
     "android": "expo start --android",
@@ -50,7 +53,7 @@
     "typecheck": "tsc --noEmit",
     "test:engine": "tsx scripts/test-experience-engine.ts",
     "test:persistence": "tsx scripts/test-web-persistence.ts",
-    "test:planet": "tsx scripts/test-pocket-planet.ts"
+    "test:planet": "tsx scripts/test-pocket-planet.ts && tsx scripts/test-path-games.ts"
   },
   "private": true
 }

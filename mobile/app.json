@@ -3,13 +3,13 @@
     "name": "Constellation: Kids Missions",
     "slug": "constellation",
     "version": "1.0.0",
-    "description": "Story-led real-world missions that turn children’s curiosity into things they actually do.",
+    "description": "Play with an idea, try it nearby, and remember what you discovered. Interactive experiments and real-world family missions.",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "constellation",
     "userInterfaceStyle": "light",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "icon": "./assets/images/icon.png"
     },
     "android": {
       "package": "com.constellation.app",

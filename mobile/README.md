@@ -1,6 +1,10 @@
 # Constellation mobile
 
-Constellation is an Expo and React Native app that guides children ages 6–12 into safe, reviewed real-world story-missions. The phone is a brief guide; the meaningful action happens away from the screen. Ages 6–7 are guardian-led; 8–9 and 10–12 receive increasingly independent variants.
+Constellation is an Expo and React Native app for children ages 6–12 and their grown-ups. Pocket Planet includes Paper Post, a light-and-shadow lesson, simpler creation/planning tools, and a Maker’s Workbench with shape drawing and a paired-gear model. The linked Out There library contains 25 authored real-world missions. Digital finds are separate from child-reported real-world stars. Ages 6–7 are guardian-led; age variants are generated adaptations pending independent review.
+
+Current build status: local prototype. See [release evidence](release/README.md) and [critical audit](../store/shipaton-audit-2026-09-27.md) before making public-release, safety-review, or learning-outcome claims.
+
+The Maker’s Workbench adapts guided→memory→free drawing and assemble→test patterns from a teammate prototype. Its sketches and gear arrangements are session-local, unscored digital practice, not saved finds or gold stars. The open paper prompt works without Family; the full Three-Colour Picture mission is shown only to an already-entitled Family profile and still uses the catalog safety flow.
 
 ## Run locally
 
@@ -20,6 +24,8 @@ The repository includes `eas.json` development, preview APK, and production Andr
 ## RevenueCat setup
 
 The app already contains the SDK, privacy-minimizing adapter, grown-up gate, membership surface, restore, customer center, local entitlement cache, and trusted access enforcement. Store configuration remains external.
+
+No production purchase, store listing, price, trial or restore is established by this repository alone. `npm run check:release` blocks production builds until attributable reviews and native purchase tests are recorded. Do not bypass it by adding placeholder evidence.
 
 1. Create the Android app in Google Play Console using `com.constellation.app`.
 2. Create the matching Android app in one RevenueCat project.
@@ -57,6 +63,8 @@ npm run typecheck
 npm run lint
 npm run test:engine
 npm run test:persistence
+npm run test:planet
+npm run check:release # deliberately fails until external release evidence exists
 npx expo-doctor
 npx expo export --platform all --output-dir dist
 ```

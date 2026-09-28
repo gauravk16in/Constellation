@@ -20,6 +20,7 @@ import { MissionOptionArtwork } from '@/features/missions/mission-option-artwork
 import { MissionWorldArtwork } from '@/features/missions/mission-world-artwork';
 import { createMissionState, getOrder, getPrimaryInteraction, getSelected, isInteractionReady, isMissionStartReady } from '@/features/missions/mission-state';
 import { useExperienceSession } from '@/features/session/experience-session-provider';
+import { ShadowTransfer } from '@/features/planet/shadow-transfer';
 import { useEntitlements } from '@/features/entitlements/entitlement-provider';
 import { canAccessExperience } from '@/features/entitlements/access-policy';
 import { colors, fontFamilies, motion, radius, spacing } from '@/theme';
@@ -420,6 +421,7 @@ export function ExperienceMissionScreen() {
       <Animated.View entering={reduceMotion ? undefined : FadeInDown.duration(motion.standard)} style={styles.main}>
         {error ? <View accessibilityLiveRegion="assertive" style={styles.error}><ThemedText style={styles.errorText} variant="body">{error}</ThemedText></View> : null}
         {renderContent()}
+        {experienceId === 'shadow-tracing' && (ownSession?.phase === 'return' || completedNow) ? <ShadowTransfer returning /> : null}
       </Animated.View>
     </Screen>
   );

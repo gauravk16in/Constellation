@@ -84,6 +84,13 @@ export function CuriosityAreaScreen() {
           <ActionButton label="Change" onPress={() => router.push('/what-fits')} />
         </View>
 
+        {area.id === 'make-create' ? <View style={styles.studioInvite}>
+          <ThemedText style={styles.contextEyebrow} variant="caption">PLAY WITH AN IDEA</ThemedText>
+          <ThemedText accessibilityRole="header" style={styles.sectionTitle} variant="title">Step into the Maker’s Workbench.</ThemedText>
+          <ThemedText style={styles.body} variant="body">Draw a shape from memory or connect paper gears, then try a related idea away from the screen.</ThemedText>
+          <ActionButton label="Open the workbench" onPress={() => router.push('/maker-studio')} variant="ink" />
+        </View> : null}
+
         <View style={styles.recommendations}>
           <View style={styles.sectionHeading}>
             <ThemedText accessibilityRole="header" style={styles.sectionTitle} variant="title">{activeInArea ? 'Your mission is waiting' : 'Try this next'}</ThemedText>
@@ -127,6 +134,7 @@ const styles = StyleSheet.create({
   contextEyebrow: { color: colors.onboardingInkMuted, fontFamily: fontFamilies.bold, fontSize: 11, letterSpacing: 1 },
   contextValue: { color: colors.onboardingInk, fontFamily: fontFamilies.bold, fontSize: 15 },
   recommendations: { gap: spacing.four },
+  studioInvite: { backgroundColor: colors.onboardingSurface, borderCurve: 'continuous', borderRadius: radius.large, gap: spacing.three, padding: spacing.six },
   alternatives: { borderTopColor: colors.onboardingLine, borderTopWidth: 1, gap: spacing.three, paddingTop: spacing.four },
   alternativeHeading: { gap: spacing.one },
   alternativeTitle: { color: colors.onboardingInk, fontFamily: fontFamilies.bold, fontSize: 16 },

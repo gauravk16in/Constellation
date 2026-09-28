@@ -27,6 +27,8 @@ export default function MainLayout() {
         <Stack.Screen name="play/[gameId]" options={{ title: 'Paper Post' }} />
         <Stack.Screen name="what-fits" options={{ title: 'Out there: what fits?' }} />
         <Stack.Screen name="bridge-nearby" options={{ title: 'Build one nearby' }} />
+        <Stack.Screen name="path-nearby/[gameId]" options={{ title: 'Try it nearby' }} />
+        <Stack.Screen name="maker-studio" options={{ title: 'Maker’s Workbench' }} />
         <Stack.Screen name="grown-ups" options={{ title: 'For grown-ups' }} />
         <Stack.Screen name="grown-up-controls" options={{ title: 'Grown-up controls' }} />
         <Stack.Screen name="membership" options={{ title: 'Family membership' }} />

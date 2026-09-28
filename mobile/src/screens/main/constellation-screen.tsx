@@ -17,6 +17,7 @@ import { useAppData } from '@/features/app/app-data-provider';
 import { MissionWorldArtwork } from '@/features/missions/mission-world-artwork';
 import { PlanetFinds } from '@/features/planet/planet-finds';
 import { PlanetChoice } from '@/features/planet/planet-controls';
+import { PATH_GAMES } from '@/features/planet/path-game-engine';
 import { colors, fontFamilies, motion, radius, spacing } from '@/theme';
 import type { ConstellationStar, CuriosityAreaId } from '@/types/constellation';
 
@@ -153,7 +154,9 @@ export function ConstellationScreen() {
           <View style={styles.branchSurface}>
             {CURIOSITY_AREAS.map((area, index) => {
               const count = stars.filter((star) => star.primaryDomain === area.id).length;
-              return <View key={area.id}><View style={styles.branchRow}><DomainGlyph accent={area.accent} id={area.id} size={44} wash={area.wash} /><View style={styles.branchCopy}><ThemedText style={styles.branchTitle} variant="label">{area.title}</ThemedText><ThemedText style={styles.branchMeta} variant="caption">{count === 0 ? 'An open path' : `${count} ${count === 1 ? 'star' : 'stars'} lit`}</ThemedText></View><View style={[styles.branchDot, count > 0 && styles.branchDotLit]} /></View>{index < CURIOSITY_AREAS.length - 1 ? <View style={styles.divider} /> : null}</View>;
+              const gameId = area.id === 'make-create' ? 'paper-post' : Object.keys(PATH_GAMES).find((id) => PATH_GAMES[id as keyof typeof PATH_GAMES].area.toLowerCase() === area.title.toLowerCase());
+              const invitation = area.id === 'nature-noticing' ? 'Investigate Rose Signal' : gameId ? `Play ${gameId === 'paper-post' ? 'Paper Post' : PATH_GAMES[gameId as keyof typeof PATH_GAMES].title}` : 'Explore this area';
+              return <View key={area.id}><View style={styles.branchRow}><DomainGlyph accent={area.accent} id={area.id} size={44} wash={area.wash} /><View style={styles.branchCopy}><ThemedText style={styles.branchTitle} variant="label">{area.title}</ThemedText><ThemedText style={styles.branchMeta} variant="caption">{count === 0 ? invitation : `${count} ${count === 1 ? 'real-world star' : 'real-world stars'} lit`}</ThemedText></View><View style={[styles.branchDot, count > 0 && styles.branchDotLit]} /></View><PlanetChoice label={invitation} onPress={() => router.push(gameId ? `/play/${gameId}` : `/curiosity/${area.id}`)} />{index < CURIOSITY_AREAS.length - 1 ? <View style={styles.divider} /> : null}</View>;
             })}
           </View>
         </View>

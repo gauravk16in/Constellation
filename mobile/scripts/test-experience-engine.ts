@@ -198,4 +198,4 @@ const selectedDomains = new Set(firstRun.recommendations.map((item) => item.expe
 assert(selectedDomains.size === firstRun.recommendations.length, 'Home recommendations should prefer domain variety when possible.');
 assert(profile.interests.includes(firstRun.recommendations[0].experience.domainId), 'A selected interest should lead stable ranking when it is eligible.');
 
-console.log('Experience Engine checks passed: 25 reviewed story signals, 75 age variants, six reusable worlds, risk-based safety gating, sanitized evidence, stable ranking, and a three-result cap.');
+console.log('Experience Engine checks passed: 25 catalog story signals, 75 age variants, six reusable worlds, risk-based safety gating, sanitized evidence, stable ranking, and a three-result cap. Independent content review remains a release requirement.');

@@ -33,7 +33,7 @@ const ASSURANCES: Assurance[] = [
   },
   {
     title: 'Curiosity with guardrails',
-    body: 'Experiences come from a reviewed library. There is no open-ended AI chat for children.',
+    body: 'Experiences come from an authored library with safety checks. There is no open-ended AI chat for children.',
     icon: 'orbit',
   },
 ];

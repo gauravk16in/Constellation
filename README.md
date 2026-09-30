@@ -141,6 +141,8 @@ mobile/
 
 For deeper context, read the [product plan](plan.md), [architecture](architecture.md), [decision record](decision.md), and [product review](CONSTELLATION_PRODUCT_REVIEW.md). Contributors and coding agents should read [AGENTS.md](AGENTS.md) before changing the app, especially the child-safety and privacy boundaries.
 
+The project is open source under the [MIT License](LICENSE). The mobile starter retains its original Expo copyright notice in [`mobile/LICENSE`](mobile/LICENSE).
+
 ## Release status
 
 The target is an Android-first release, but **no public availability, purchase, trial, learning outcome, or Shipaton submission is claimed here**. Next Gen is a separate student-prototype entry and does not waive requirements for a future public children's release. The current [release evidence record](mobile/release/evidence.json) has open policy, content-review, family-pilot, billing-device, and support checks. The [Shipaton audit](store/shipaton-audit-2026-09-27.md) tracks additional competition and store requirements. Please do not replace missing evidence with placeholder approvals.

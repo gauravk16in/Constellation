@@ -12,15 +12,11 @@ An experimental, child-and-guardian app where children play with an idea, try so
 
 </div>
 
-> **Status: local prototype, not a public release.** The app builds and its automated checks run, but independent child-safety review, family testing, store billing verification, and policy review are still outstanding. See [release evidence](mobile/release/README.md).
-
-**Shipaton 2026 Next Gen:** This student-category entry does not require a public app-store release. The [submission brief](store/shipaton-next-gen-2026.md) contains judge-ready copy, the honest RevenueCat boundary, and the remaining submission checklist. The earlier [main-category draft](store/shipaton-submission.md) has different store requirements and should not be used for this entry.
-
-## The idea
+## The App idea
 
 Most technology competes for a child's attention. Constellation competes for their curiosity.
 
-Pocket Planet gives children ages **6–12** a small place to experiment with shapes, light, stories, plans, and movement. Some ideas continue as carefully bounded real-world missions. A digital creation stays a **Made here** find; a child-reported physical experience becomes a **Tried out there** star. Neither is presented as a grade or proof of mastery.
+Constellation gives children ages **6–12** a small place to experiment with shapes, light, stories, plans, and movement. Some ideas continue as carefully bounded real-world missions. A digital creation stays a **Made here** find; a child-reported physical experience becomes a **Tried out there** star. Neither is presented as a grade or proof of mastery.
 
 A numbered, always-open play trail now brings the digital activities together. A new Number Patterns pilot lets younger children find complements to ten and older children investigate multiplication near ten or 100 by moving a number marker. The pilot's content still needs independent editorial and family review.
 
@@ -67,7 +63,7 @@ The app is local-first. The authored catalog and deterministic eligibility logic
 ```mermaid
 flowchart TB
     subgraph UI[Expo Router · React Native screens]
-      Planet[Pocket Planet and digital games]
+      Planet[Constellation and digital games]
       Missions[Curiosity and mission flow]
       Guardian[Protected grown-up area]
     end

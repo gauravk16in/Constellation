@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Stack } from 'expo-router/stack';
 import { StatusBar } from 'expo-status-bar';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, View } from 'react-native';
 import Animated, { FadeInDown, useReducedMotion } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -38,6 +38,9 @@ export function MembershipScreen() {
   const [message, setMessage] = useState<string | null>(null);
   const loading = membershipStatus === 'loading';
   const family = accessTier === 'family';
+  const testStore = __DEV__ && (Platform.OS === 'android'
+    ? process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_API_KEY?.startsWith('test_')
+    : Platform.OS === 'ios' && process.env.EXPO_PUBLIC_REVENUECAT_IOS_API_KEY?.startsWith('test_'));
 
   const seePlans = async () => {
     setMessage(null);
@@ -98,10 +101,10 @@ export function MembershipScreen() {
               style={({ pressed }) => [styles.consentRow, pressed && styles.pressed]}
             >
               <View style={[styles.checkbox, guardianConsent && styles.checkboxSelected]}>{guardianConsent ? <View style={styles.checkboxDot} /> : null}</View>
-              <ThemedText selectable={false} style={styles.consentCopy} variant="caption">I am the grown-up managing purchases. When I continue, RevenueCat receives an anonymous purchase identifier and store purchase history—not the child’s nickname, age band, missions, answers, or progress.</ThemedText>
+              <ThemedText selectable={false} style={styles.consentCopy} variant="caption">I am the grown-up managing purchases. When I continue, RevenueCat receives an anonymous purchase identifier and {testStore ? 'test purchase' : 'store purchase'} history—not the child’s nickname, age band, missions, answers, or progress.</ThemedText>
             </Pressable>
             <ActionButton disabled={!guardianConsent || configurationStatus !== 'ready'} label="See family plans" loading={loading} onPress={() => void seePlans()} variant="ink" />
-            <ThemedText style={styles.storeNote} variant="caption">Your App Store or Play Store shows the local price, trial, renewal terms, and confirmation before charging.</ThemedText>
+            <ThemedText style={styles.storeNote} variant="caption">{testStore ? 'Test Store simulates a purchase for development. No payment is taken; this is not a real subscription.' : 'Your App Store or Play Store shows the local price, trial, renewal terms, and confirmation before charging.'}</ThemedText>
             <TextAction disabled={!guardianConsent || loading || configurationStatus !== 'ready'} label="Restore an earlier purchase" onPress={() => void restore()} />
           </View>
         )}

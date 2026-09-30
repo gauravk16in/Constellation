@@ -21,11 +21,24 @@ npx expo start --dev-client
 
 The repository includes `eas.json` development, preview APK, and production Android App Bundle profiles. The permanent Android package is `com.constellation.app`; do not change it after Play and RevenueCat products are configured.
 
-## RevenueCat setup
+## RevenueCat for the Next Gen prototype
 
 The app already contains the SDK, privacy-minimizing adapter, grown-up gate, membership surface, restore, customer center, local entitlement cache, and trusted access enforcement. Store configuration remains external.
 
+For the student prototype, use [RevenueCat Test Store](https://www.revenuecat.com/docs/test-and-launch/sandbox/test-store) to demonstrate the actual SDK flow without a Play Console account. The installed React Native Purchases SDK supports Test Store. Its simulated purchases update `CustomerInfo` and `constellation_family`, but they are **sandbox transactions, not real revenue or Google Play purchases**.
+
+1. In RevenueCat, create a project and a **Test Store** under **Apps & providers → Test configuration**. Copy its public `test_` SDK key.
+2. Create entitlement `constellation_family`. In **Product catalog**, create monthly and annual Test Store products, attach both to that entitlement, and add them as the monthly and annual packages of offering `default`. Set `default` as the current offering.
+3. Create a restrained guardian-facing Paywall for that offering, with accurate Family benefits, displayed plan terms, close/restore access, privacy/terms links, and no child-directed sales copy. **Publish** the Paywall; a draft is not served to the app. Configure Customer Center if you want to demonstrate management.
+4. In the ignored `.env.local`, set `EXPO_PUBLIC_REVENUECAT_ANDROID_API_KEY=test_your_key` (and the iOS variable only if testing iOS). Never commit the file. This is a *debug-build-only* key.
+5. Build and run a **debug development client**, then start Metro: `npx expo run:android` and `npx expo start --dev-client`. From the app, enter **Grown-ups → Family membership → See Family plans**. Expo Go and the web preview do not prove a native transaction.
+6. Simulate purchase, cancellation, and failure in Test Store. Verify Family access only after a successful purchase; restart, restore, expiry, and free access afterward. In RevenueCat, enable sandbox data to see the test customer and transaction.
+
+**Do not use a `test_` key in `assembleRelease`, the existing release-mode APK, TestFlight, or a Google Play build.** RevenueCat intentionally rejects Test Store keys in non-debuggable release builds. React Native does not expose the native override. Swap to a platform-specific `goog_`/`appl_` key when you later test actual store billing. See [RevenueCat's Test Store guidance](https://www.revenuecat.com/docs/test-and-launch/sandbox/test-store).
+
 No production purchase, store listing, price, trial or restore is established by this repository alone. `npm run check:release` blocks production builds until attributable reviews and native purchase tests are recorded. Do not bypass it by adding placeholder evidence.
+
+## Later Google Play setup
 
 1. Create the Android app in Google Play Console using `com.constellation.app`.
 2. Create the matching Android app in one RevenueCat project.

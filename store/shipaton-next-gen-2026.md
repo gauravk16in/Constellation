@@ -20,6 +20,8 @@ An optional **Out There** path connects an idea to a real-world mission. The app
 
 The guardian sets local safety boundaries and controls purchases. Constellation's RevenueCat integration is confined to the grown-up area: an anonymous entitlement determines access to Family content; child nicknames, answers, reflections, and progress are not sent as RevenueCat attributes. The repository implements a paywall, restore, Customer Center, and free-versus-Family access policy. **Live store products and a real purchase have not been verified**, so the video and submission must not depict a completed payment or claim revenue.
 
+For this student prototype, the next native test is [RevenueCat Test Store](https://www.revenuecat.com/docs/test-and-launch/sandbox/test-store), which can demonstrate an SDK-backed *sandbox* entitlement without Play publication. If shown in the demo, label it **test purchase**; do not present it as real revenue or a Google Play transaction. The [mobile setup guide](../mobile/README.md) contains the dashboard and debug-build steps.
+
 This is a working student prototype, not a publicly released or independently certified children's product. Its authored 25-mission catalog and three age bands need qualified editorial/safety review and family testing before public launch. The Next Gen entry shows the product idea, playable implementation, engineering choices, and the specific boundaries still to validate.
 
 ## What is distinctive

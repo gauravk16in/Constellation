@@ -1,5 +1,7 @@
 import assert from './test-assert';
 import { applyPlanetCommand, emptyPlanet, paperHolds, reducePaper, initialPaper, parsePlanet } from '../src/features/planet/paper-post-engine';
+import { NUMBER_CHALLENGES, distanceFromBase, leftChoices, nearBaseParts, rightChoices } from '../src/features/planet/number-patterns-engine';
+import { completedTrailIds, nextTrailId, PLAY_TRAIL } from '../src/features/planet/play-trail';
 
 assert.equal(paperHolds({ shape: 'flat', gap: 'wide', parcels: 1 }), false);
 assert.equal(paperHolds({ shape: 'folded', gap: 'short', parcels: 1 }), true);
@@ -7,6 +9,7 @@ assert.equal(paperHolds({ shape: 'accordion', gap: 'wide', parcels: 3 }), false)
 assert.equal(paperHolds({ shape: 'accordion', gap: 'short', parcels: 3 }), true);
 const context = { profileId: 'fixture', ageBand: '8-9' as const, family: false, now: '2026-09-13T10:00:00Z' };
 const start = (id: string) => ({ type: 'start' as const, id, scenarioId: 'first-parcel' as const });
+assert.equal(applyPlanetCommand(emptyPlanet(), { ...start('prediction'), initialShape: 'folded' }, context).session?.state.shape, 'folded', 'The first-screen guess must carry into Paper Post.');
 let data = applyPlanetCommand(emptyPlanet(), start('one'), context);
 assert.throws(() => applyPlanetCommand(data, start('two'), context), /Resume/);
 assert.throws(() => applyPlanetCommand(emptyPlanet(), { ...start('paid'), scenarioId: 'wide-gap' }, context), /membership/);
@@ -46,4 +49,24 @@ assert.deepEqual(parsePlanet(JSON.stringify(data)), data);
 assert.throws(() => parsePlanet('{oops'), /saved planet/);
 const state = reducePaper(initialPaper('sandbox'), { type: 'test' });
 assert.equal(reducePaper(state, { type: 'gap', value: 'short' }).result, null, 'changes require a fresh test');
+assert.equal(PLAY_TRAIL.length, 6);
+assert.equal(nextTrailId(emptyPlanet()), 'paper-post');
+assert.equal(distanceFromBase(10, 9), 1);
+assert.deepEqual(nearBaseParts(10, 9, 8), { firstGap: 1, secondGap: 2, left: 7, right: 2, product: 72 });
+assert.deepEqual(nearBaseParts(100, 97, 96), { firstGap: 3, secondGap: 4, left: 93, right: 12, product: 9312 });
+assert.equal(leftChoices(7).includes(7), true);
+assert.equal(rightChoices(12).includes(12), true);
+assert.throws(() => distanceFromBase(10, 11), /path/);
+for (const ageBand of ['6-7', '8-9', '10-12'] as const) {
+  const challenge = NUMBER_CHALLENGES[ageBand];
+  assert.equal(distanceFromBase(challenge.base, challenge.first), nearBaseParts(challenge.base, challenge.first, challenge.second).firstGap);
+}
+let mathsData = applyPlanetCommand(emptyPlanet(), { type: 'complete-number-lesson', lessonId: 'near-base' }, context);
+assert.equal(mathsData.numberLessons?.length, 1);
+assert.equal(completedTrailIds(mathsData).has('near-base'), true);
+assert.equal(nextTrailId(mathsData), 'paper-post');
+assert.deepEqual(applyPlanetCommand(mathsData, { type: 'complete-number-lesson', lessonId: 'near-base' }, context), mathsData, 'digital lesson completion is idempotent');
+assert.deepEqual(parsePlanet(JSON.stringify(mathsData)), mathsData);
+assert.equal(parsePlanet(JSON.stringify({ ...emptyPlanet(), numberLessons: undefined })).numberLessons, undefined, 'legacy saves remain readable');
+assert.throws(() => parsePlanet(JSON.stringify({ ...emptyPlanet(), numberLessons: [{ id: 'made-up', ageBand: '8-9', completedAt: context.now }] })), /saved planet/);
 console.log('Pocket Planet: qualitative model, age handoff, membership, duplicate completion, capacity, undo and parsing passed.');

@@ -2,6 +2,7 @@ import { colors, fontFamilies, radius, spacing } from '@/theme';
 
 // Deliberately fixed illustration inks: muted/light and dark-system-bar safe.
 export const planetInk = {
+  landingWash: '#E0E9E3',
   sky: '#CDE5EF', cloud: '#FAF6EB', distant: '#AAC9AE', grass: '#719D7C',
   grassLight: '#A8BF87', grassDark: '#416B58', earth: '#C79B82', earthDark: '#AB806B',
   river: '#8FBCCB', riverLight: '#D1E4DF', paper: '#FFF5DC', fold: '#E7DCC2',

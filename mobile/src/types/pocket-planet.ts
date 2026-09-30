@@ -40,13 +40,15 @@ export type PlanetData = {
   version: 1; revision: number; session: GameSession | null;
   artifacts: CreativeArtifact[]; outcomes: GameOutcome[];
   replacement: { previous: CreativeArtifact; replacementId: string } | null;
+  numberLessons?: { id: 'near-base'; ageBand: AgeBand; completedAt: string }[];
   pathSession?: PathGameSession | null;
   pathFinds?: PathFind[];
   pathOutcomes?: PathOutcome[];
   pathReplacement?: { previous: PathFind; replacementId: string } | null;
 };
 export type PlanetCommand = PathCommand
-  | { type: 'start'; id: string; scenarioId: PaperScenario; replaceSessionId?: string; replacePathSessionId?: string; editArtifactId?: string }
+  | { type: 'complete-number-lesson'; lessonId: 'near-base' }
+  | { type: 'start'; id: string; scenarioId: PaperScenario; initialShape?: PaperShape; replaceSessionId?: string; replacePathSessionId?: string; editArtifactId?: string }
   | { type: 'act'; sessionId: string; action: PaperAction }
   | { type: 'finish'; sessionId: string; replaceArtifactId?: string }
   | { type: 'undo-replacement' }

@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { Pressable, StyleSheet, View } from 'react-native';
 import Animated, { FadeInDown, useReducedMotion } from 'react-native-reanimated';
@@ -10,6 +10,7 @@ import { RecommendationCard } from '@/components/recommendation-card';
 import { Screen } from '@/components/screen';
 import { ThemedText } from '@/components/themed-text';
 import { getExperienceById } from '@/data/catalog/experience-catalog';
+import { getCuriosityArea } from '@/data/catalog/curiosity-areas';
 import { useAppData } from '@/features/app/app-data-provider';
 import { recommendExperiences } from '@/features/recommendations/recommendation-engine';
 import { useExperienceSession } from '@/features/session/experience-session-provider';
@@ -45,6 +46,8 @@ const MATERIAL_OPTIONS: { id: MaterialGroupId; label: string }[] = [
 
 export function HomeScreen() {
   const router = useRouter();
+  const { fromArea } = useLocalSearchParams<{ fromArea?: string }>();
+  const returnArea = fromArea ? getCuriosityArea(fromArea) : undefined;
   const insets = useSafeAreaInsets();
   const reduceMotion = useReducedMotion();
   const { activeSession, outcomes, profile } = useAppData();
@@ -82,8 +85,8 @@ export function HomeScreen() {
             <ThemedText style={styles.greeting} variant="label">Hi, {profile.nickname}.</ThemedText>
             <Pressable accessibilityHint="Opens a grown-up check before family controls" accessibilityRole="button" onPress={() => router.push('/grown-ups')} style={({ pressed }) => [styles.grownUpButton, pressed && styles.chipPressed]}><ThemedText selectable={false} style={styles.grownUpButtonText} variant="caption">Grown-ups</ThemedText></Pressable>
           </View>
-          <ThemedText accessibilityRole="header" style={styles.heading} variant="display">What could you explore today?</ThemedText>
-          <ThemedText style={styles.body} variant="body">Tell Constellation what fits right now. You’ll get a few strong ideas, not a feed.</ThemedText>
+          <ThemedText accessibilityRole="header" style={styles.heading} variant="display">{returnArea ? `Get ready for ${returnArea.title}.` : 'What could you explore today?'}</ThemedText>
+          <ThemedText style={styles.body} variant="body">{returnArea ? 'Choose the time, place, people, and things you really have. The mission will check safety again before it starts.' : 'Tell Constellation what fits right now. You’ll get a few strong ideas, not a feed.'}</ThemedText>
         </View>
 
         {activeExperience ? (
@@ -116,22 +119,23 @@ export function HomeScreen() {
               <ThemedText style={styles.contextLabel} variant="label">Things nearby</ThemedText>
               <View style={styles.chipRow}>{MATERIAL_OPTIONS.map((option) => <ChoiceChip key={option.id} label={option.label} onPress={() => selectMaterial(option.id)} selected={context.materialsAvailable.includes(option.id)} />)}</View>
             </View>
-            <ActionButton accessibilityHint="Finds up to three reviewed experiences that fit these choices" label="See today’s ideas" onPress={() => setSearched(true)} variant="ink" />
+            <ActionButton accessibilityHint={returnArea ? `Returns to ${returnArea.title} with these choices` : 'Finds up to three authored experiences that fit these choices'} label={returnArea ? `See ${returnArea.shortTitle} missions` : 'See today’s ideas'} onPress={() => returnArea ? router.back() : setSearched(true)} variant="ink" />
           </View>
         )}
 
         {searched && !activeExperience ? (
           <Animated.View entering={reduceMotion ? undefined : FadeInDown.duration(motion.standard)} style={styles.results}>
             <View style={styles.resultHeading}>
-              <ThemedText accessibilityRole="header" style={styles.sectionTitle} variant="title">Three ways to begin</ThemedText>
+              <ThemedText accessibilityRole="header" style={styles.sectionTitle} variant="title">{result.recommendations.length ? 'Ideas that fit' : 'Explore another path'}</ThemedText>
               <ThemedText style={styles.sectionHint} variant="caption">Each idea passed the profile and context boundaries first.</ThemedText>
             </View>
             {result.recommendations.length > 0 ? result.recommendations.map((recommendation) => (
               <RecommendationCard key={recommendation.experience.id} recommendation={recommendation} onPress={() => router.push(`/experience/${recommendation.experience.id}`)} />
             )) : (
               <View accessibilityLiveRegion="polite" style={styles.emptySurface}>
-                <ThemedText style={styles.emptyTitle} variant="title">Nothing safe fits all those choices yet.</ThemedText>
-                <ThemedText style={styles.body} variant="body">Try allowing more time, choosing indoors, adding a grown-up, or selecting materials you have nearby.</ThemedText>
+                <ThemedText style={styles.emptyTitle} variant="title">The six curiosity paths are still open.</ThemedText>
+                <ThemedText style={styles.body} variant="body">Look through their missions, or change the time, people, and things above. We’ll check what fits before any real-world mission begins.</ThemedText>
+                <ActionButton label="Explore the six paths" onPress={() => router.push('/curiosity')} variant="ink" />
               </View>
             )}
           </Animated.View>

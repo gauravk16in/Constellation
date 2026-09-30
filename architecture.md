@@ -481,7 +481,8 @@ A bundled experience can enter recommendations only when its runtime shape is va
 - No secret in the client bundle.
 - No cloud account or remote child identifier in the MVP.
 - No precise location permission in the core flow.
-- No photos, voice, contacts, advertising identifier, or public profile.
+- No photos, voice recordings, contacts, advertising identifier, or public profile.
+- Optional read-aloud sends only fixed authored prompts to the device speech provider. Availability, installed Indian-English voices, and whether the operating system uses an online voice service vary by device; no child answer or nickname is synthesized.
 - Mission completion is trusted without camera evidence, microphone capture, uploads, or surveillance proof.
 - Child-entered mission text is local, session-scoped, and excluded from diagnostics.
 - Guardian confirmation protects reset, purchase, and future data-export actions.

@@ -1,5 +1,7 @@
 # RevenueCat Shipaton Submission Draft
 
+> Historical **main-category/store-release** draft. The current student entry uses the [Next Gen submission brief](shipaton-next-gen-2026.md), whose rules do not require a public store release. Do not copy this checklist into the Next Gen form.
+
 ## One-line pitch
 
 Constellation lets children play with an idea, try a related activity nearby, and remember both the digital experiment and their reported real-world discovery.

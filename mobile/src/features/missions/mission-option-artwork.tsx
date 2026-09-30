@@ -9,7 +9,7 @@ export function MissionOptionArtwork({ accent, id, selected }: Props) {
   const detail = selected ? '#FFFDF8' : accent;
   const common = { fill: 'none', stroke: ink, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, strokeWidth: 2.1 };
   return (
-    <Svg accessibilityElementsHidden height={42} importantForAccessibility="no-hide-descendants" viewBox="0 0 48 42" width={48}>
+    <Svg height={42} viewBox="0 0 48 42" width={48}>
       {id === 'bridge-flat' ? <Path {...common} d="M5 29h38M10 22h28" /> : null}
       {id === 'bridge-folded' ? <Path {...common} d="M5 30h38M10 25v-7h28v7" /> : null}
       {id === 'bridge-accordion' ? <Path {...common} d="M5 30h38M9 25l5-9 5 9 5-9 5 9 5-9 5 9" /> : null}

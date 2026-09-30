@@ -18,7 +18,8 @@ import { useAppData } from '@/features/app/app-data-provider';
 import { MissionInteractionView } from '@/features/missions/mission-interaction';
 import { MissionOptionArtwork } from '@/features/missions/mission-option-artwork';
 import { MissionWorldArtwork } from '@/features/missions/mission-world-artwork';
-import { createMissionState, getOrder, getPrimaryInteraction, getSelected, isInteractionReady, isMissionStartReady } from '@/features/missions/mission-state';
+import { createMissionState, getOrder, getPrimaryInteraction, getSelected, isInteractionReady, isMissionReturnReady, isMissionStartReady } from '@/features/missions/mission-state';
+import { MissionVoice } from '@/features/voice/mission-voice';
 import { useExperienceSession } from '@/features/session/experience-session-provider';
 import { ShadowTransfer } from '@/features/planet/shadow-transfer';
 import { useEntitlements } from '@/features/entitlements/entitlement-provider';
@@ -209,7 +210,7 @@ export function ExperienceMissionScreen() {
   );
   const area = experience ? getCuriosityArea(experience.domainId) : undefined;
   const initialState = useMemo(() => definition ? createMissionState(definition.briefInteractions, definition.returnInteractions) : {}, [definition]);
-  const [draftState, setDraftState] = useState<MissionInteractionState>(() => experienceId === 'paper-bridge' && experience?.version === 3 && bridgeHandoff
+  const [draftState, setDraftState] = useState<MissionInteractionState>(() => experienceId === 'paper-bridge' && (experience?.version ?? 0) >= 3 && bridgeHandoff
     ? { ...initialState, 'bridge-fold.selected': [bridgeHandoff] } : initialState);
   const [localPhase, setLocalPhase] = useState<'story' | 'brief' | 'ready'>(() => definition?.narrative ? 'story' : 'brief');
   const [error, setError] = useState<string | null>(null);
@@ -239,6 +240,14 @@ export function ExperienceMissionScreen() {
   const allReady = definition.preparation.every((item) => checked.includes(item.id));
   const guardianReady = definition.startPolicy.kind === 'child' || workingState.guardianConfirmed === true;
   const briefReady = definition.briefInteractions.every((interaction) => isInteractionReady(interaction, workingState));
+  const bridgeThinkingLoop = experienceId === 'paper-bridge' && (ownSession?.catalogVersion ?? experience.version) >= 4;
+  const revision = getSelected(workingState, 'bridge-revision')[0];
+  const voiceText = completedNow ? `${definition.narrative.resolvedWorld.heading} ${definition.narrative.resolvedWorld.body}`
+    : ownSession?.phase === 'active' ? `${definition.memoryCue} ${definition.narrative.realWorldObjective}`
+    : ownSession?.phase === 'return' ? 'What happened out there? Tell us what your real test showed. A surprising result is useful too.'
+    : localPhase === 'ready' ? `Check your place, people, and materials. ${experience.safetyNote}`
+    : localPhase === 'story' ? `${definition.narrative.hook.heading} ${definition.narrative.hook.body}`
+    : `${experience.title}. ${definition.successCue}`;
 
   const updateDraft = (next: MissionInteractionState) => {
     setError(null);
@@ -287,7 +296,11 @@ export function ExperienceMissionScreen() {
 
   const changeSessionState = (next: MissionInteractionState) => {
     setError(null);
-    void saveMission({ interactionState: next }).catch((caught) => setError(caught instanceof Error ? caught.message : 'Your mission could not be saved.'));
+    const changed = { ...next };
+    if (changed['bridge-result.option-1'] !== workingState['bridge-result.option-1']) changed['bridge-first-confirmed'] = false;
+    if (changed['bridge-second-result.objects'] !== workingState['bridge-second-result.objects'] ||
+      changed['bridge-revision.selected'] !== workingState['bridge-revision.selected']) changed['bridge-second-confirmed'] = false;
+    void saveMission({ interactionState: changed }).catch((caught) => setError(caught instanceof Error ? caught.message : 'Your mission could not be saved.'));
   };
 
   const moveToReturn = async () => {
@@ -299,7 +312,7 @@ export function ExperienceMissionScreen() {
   };
 
   const complete = async (reflection?: MissionReflection) => {
-    if (definition.returnInteractions?.some((interaction) => !isInteractionReady(interaction, workingState))) {
+    if (!isMissionReturnReady(definition, workingState)) {
       setError('Finish the short result above before lighting this star.');
       setShowReflection(false);
       return;
@@ -347,7 +360,18 @@ export function ExperienceMissionScreen() {
     if (ownSession?.phase === 'return') return (
       <View style={styles.phaseStack}>
         <View style={styles.returnIntro}><ThemedText style={[styles.eyebrow, { color: area.accent }]} variant="caption">WELCOME BACK</ThemedText><ThemedText accessibilityRole="header" style={styles.heading} variant="display">What happened out there?</ThemedText><ThemedText style={styles.body} variant="body">Your answer belongs to you. Constellation only needs a small signal to remember this experience.</ThemedText></View>
-        {!showKnowledge && !showReflection ? definition.returnInteractions?.map((interaction) => <MissionInteractionView key={interaction.id} accent={area.accent} interaction={interaction} onChange={changeSessionState} state={workingState} wash={area.wash} />) : null}
+        {!showKnowledge && !showReflection ? definition.returnInteractions?.map((interaction) => {
+          if (bridgeThinkingLoop && interaction.id === 'bridge-second-result' && revision !== 'shape' && revision !== 'supports') return null;
+          return <View key={interaction.id} style={{ gap: spacing.two }}>
+            <MissionInteractionView accent={area.accent} interaction={interaction} onChange={changeSessionState} state={workingState} wash={area.wash} />
+            {bridgeThinkingLoop && interaction.id === 'bridge-result' ? <InlineAction
+              label={workingState['bridge-first-confirmed'] === true ? 'First test recorded' : 'Record this first test'}
+              onPress={() => changeSessionState({ ...workingState, 'bridge-first-confirmed': true })} /> : null}
+            {bridgeThinkingLoop && interaction.id === 'bridge-second-result' ? <InlineAction
+              label={workingState['bridge-second-confirmed'] === true ? 'Second test recorded' : 'Record this second test'}
+              onPress={() => changeSessionState({ ...workingState, 'bridge-second-confirmed': true })} /> : null}
+          </View>;
+        }) : null}
         {showKnowledge && definition.narrative ? (
           <Animated.View entering={reduceMotion ? undefined : FadeInDown.duration(motion.standard)} style={styles.knowledgeReveal}>
             <View style={styles.knowledgeSignal}><View style={[styles.knowledgeSignalLine, { backgroundColor: area.accent }]} /><View style={[styles.knowledgeSignalDot, { backgroundColor: area.accent }]} /></View>
@@ -357,7 +381,7 @@ export function ExperienceMissionScreen() {
           </Animated.View>
         ) : !showReflection ? (
           <View style={styles.returnActions}><ActionButton label="I did it" onPress={() => {
-            if (definition.returnInteractions?.some((interaction) => !isInteractionReady(interaction, workingState))) setError('Finish the short result above before continuing.');
+            if (!isMissionReturnReady(definition, workingState)) setError('Record your first result and choose whether you tried a second design.');
             else { setError(null); if (definition.narrative) setShowKnowledge(true); else setShowReflection(true); }
           }} variant="ink" /><InlineAction label="Finish later" onPress={() => void finishLater()} /><InlineAction label="Stop this mission" onPress={() => void stop()} danger />{confirmStop ? <ThemedText accessibilityLiveRegion="polite" style={styles.confirmText} variant="caption">Tap “Stop this mission” again to end it. No score or progress is lost.</ThemedText> : null}</View>
         ) : (
@@ -420,6 +444,7 @@ export function ExperienceMissionScreen() {
       <StatusBar style="dark" />
       <Animated.View entering={reduceMotion ? undefined : FadeInDown.duration(motion.standard)} style={styles.main}>
         {error ? <View accessibilityLiveRegion="assertive" style={styles.error}><ThemedText style={styles.errorText} variant="body">{error}</ThemedText></View> : null}
+        <MissionVoice text={voiceText} />
         {renderContent()}
         {experienceId === 'shadow-tracing' && (ownSession?.phase === 'return' || completedNow) ? <ShadowTransfer returning /> : null}
       </Animated.View>

@@ -95,7 +95,7 @@ const RAW_CATALOG: ExperienceSeed[] = [
   },
   {
     id: 'paper-bridge', version: 1, status: 'published', title: 'Build a Paper Bridge',
-    promise: 'Fold paper into a bridge that can hold five small objects.', domainId: 'make-create',
+    promise: 'Predict, build, and compare what a paper bridge can carry.', domainId: 'make-create',
     ageBands: ['8-9', '10-12'], durationMinutes: 30, settings: ['indoors'], allowedContexts: ['home'],
     companionOptions: ['solo', 'guardian', 'sibling', 'friend'], requiredMaterials: ['paper-drawing', 'basic-household'],
     weatherAllowed: ['clear', 'cloudy', 'rain', 'hot', 'cold', 'unknown'], timeWindow: 'any',
@@ -291,7 +291,7 @@ function withAgePolicies(experience: ExperienceSeed): Experience {
   };
   return {
     ...experience,
-    version: experience.id === 'paper-bridge' ? 3 : 2,
+    version: experience.id === 'paper-bridge' ? 4 : 2,
     ageBands: ['6-7', '8-9', '10-12'],
     agePolicies: {
       '6-7': {

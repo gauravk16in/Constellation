@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useRouter } from 'expo-router';
+import { useRouter, type Href } from 'expo-router';
 import { View } from 'react-native';
 import Svg from 'react-native-svg';
 import { ThemedText } from '@/components/themed-text';
@@ -18,7 +18,7 @@ export function PlanetFinds() {
   return <View style={s.section}>
     <ThemedText style={s.body}>Creations you made and tested inside the game. These memories describe actions the app observed, not verified learning.</ThemedText>
     {error ? <ThemedText accessibilityRole="alert" style={s.body}>{error}</ThemedText> : null}
-    {!data?.artifacts.length && !data?.pathFinds?.length ? <View style={s.surface}><ThemedText style={s.label}>A space for your ideas.</ThemedText><ThemedText style={s.body}>Keep something you make in a game and it will live here.</ThemedText><PlanetChoice label="Play Paper Post" onPress={() => router.push('/play/paper-post')} /></View> : null}
+    {!data?.artifacts.length && !data?.pathFinds?.length && !data?.numberLessons?.length ? <View style={s.surface}><ThemedText style={s.label}>A space for your ideas.</ThemedText><ThemedText style={s.body}>Keep something you make in a game and it will live here.</ThemedText><PlanetChoice label="Play Paper Post" onPress={() => router.push('/play/paper-post')} /></View> : null}
     {data?.artifacts.map((item, index) => <PlanetChoice key={item.id} label={`Bridge ${index + 1} · ${item.color} · ${item.shape}`} selected={item.id === selectedId} onPress={() => setSelectedId(item.id)}>
       <Svg width="100%" height={55} viewBox="-10 -8 220 55"><BridgeDrawing shape={item.shape} color={bridgeColors[item.color]} /></Svg>
     </PlanetChoice>)}
@@ -46,5 +46,12 @@ export function PlanetFinds() {
       </View>;
     })}
     {data?.pathReplacement ? <View style={s.surface}><ThemedText style={s.body}>Your previous version can be restored. The new experiment memory will still remain.</ThemedText><PlanetChoice label="Undo last creation change" disabled={busy} onPress={() => void change({ type: 'undo-path-replacement' })} /></View> : null}
+    {data?.numberLessons?.map((lesson) => <View key={lesson.id} style={s.surface}>
+      <ThemedText style={s.caption}>PRACTISED HERE · TEST & DISCOVER</ThemedText>
+      <ThemedText accessibilityRole="header" style={s.label}>Number Patterns</ThemedText>
+      <ThemedText style={s.body}>{lesson.ageBand === '6-7' ? 'Found how two numbers reach ten.' : 'Used number gaps to investigate a near-base multiplication pattern.'}</ThemedText>
+      <ThemedText style={s.caption}>Digital practice · {new Date(lesson.completedAt).toLocaleDateString()} · not a gold star</ThemedText>
+      <PlanetChoice label="Try the number lesson again" onPress={() => router.push('/number-patterns' as Href)} />
+    </View>)}
   </View>;
 }

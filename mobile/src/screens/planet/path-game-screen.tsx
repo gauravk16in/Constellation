@@ -10,6 +10,7 @@ import { PathGameArtwork } from '@/features/planet/path-game-artwork';
 import { MOVE_CARDS, PATH_GAMES, SORT_OBJECTS, SORT_RULES, STORY_OBJECTS, canSavePath, pathFeedback } from '@/features/planet/path-game-engine';
 import { PlanetChoice } from '@/features/planet/planet-controls';
 import { usePlanet } from '@/features/planet/planet-provider';
+import { MissionVoice } from '@/features/voice/mission-voice';
 import { spacing } from '@/theme';
 import { planetStyles as s } from '@/theme/planet';
 import { ShadowLessonScreen } from '@/screens/planet/shadow-lesson-screen';
@@ -112,6 +113,7 @@ export function PathGameScreen() {
       {!shadowLesson ? <><ThemedText style={s.caption}>{definition.area.toUpperCase()} · PLAY HERE</ThemedText>
         <ThemedText accessibilityRole="header" style={s.title}>{definition.question}</ThemedText>
         <ThemedText style={s.body}>{definition.prompt}</ThemedText></> : null}
+      {definition && !shadowLesson ? <MissionVoice text={`${definition.question} ${definition.prompt}`} /> : null}
       {!data && !error ? <ActivityIndicator accessibilityLabel="Opening your saved game" /> : null}
       {error ? <View style={s.surface}><ThemedText accessibilityRole="alert" style={s.body}>{error}</ThemedText><PlanetChoice label="Reload my saved game" onPress={() => void reload()} /></View> : null}
       {data?.session ? <View style={s.surface}><ThemedText style={s.body}>Your Paper Post draft is saved. Keep playing it, or replace only this digital draft. Your real-world mission will not change.</ThemedText><ActionButton variant="ink" label="Return to Paper Post" onPress={() => router.push('/play/paper-post')} /><PlanetChoice label={replaceChoice ? 'Keep Paper Post' : `Choose ${definition.title} instead`} onPress={() => setReplaceChoice(!replaceChoice)} />{replaceChoice ? <ActionButton variant="ink" label="Replace Paper Post draft" disabled={busy} onPress={() => void restart(undefined, data.session?.id)} /> : null}</View> : null}

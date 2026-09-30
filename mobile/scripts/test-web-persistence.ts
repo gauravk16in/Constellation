@@ -1,6 +1,6 @@
 import { getExperienceById } from '../src/data/catalog/experience-catalog';
 import { getMissionDefinition } from '../src/data/catalog/mission-registry';
-import { createMissionState, setValue } from '../src/features/missions/mission-state';
+import { createMissionState, setSelected, setValue } from '../src/features/missions/mission-state';
 import type { ExperienceContext } from '../src/types/constellation';
 
 function assert(condition: unknown, message: string): asserts condition {
@@ -82,6 +82,26 @@ const storyOutcome = await appRepository.completeSession(storySession.id, 'again
 assert(storyOutcome.evidence.some((item) => item.kind === 'retell'), 'Three-Object Story must retain the approved retell summary.');
 assert(!memoryStorage.serialized().includes('private red cup'), 'Child-entered object names must disappear with the completed session.');
 assert(!memoryStorage.serialized().includes('private blue key'), 'No child-entered story object may enter evidence storage.');
+
+const bridgeExperience = getExperienceById('paper-bridge')!;
+const bridgeMission = getMissionDefinition('paper-bridge', '8-9', bridgeExperience.version)!;
+let bridgeState = createMissionState(bridgeMission.briefInteractions, bridgeMission.returnInteractions);
+bridgeState = setSelected(bridgeState, 'bridge-fold', ['folded']);
+bridgeState = setSelected(bridgeState, 'bridge-prediction', ['stiffer']);
+const bridgeSession = await appRepository.startExperience({ childProfileId: profile.id, experienceId: bridgeExperience.id,
+  catalogVersion: bridgeExperience.version, context: { ...context, availableMinutes: 60, setting: 'indoors', materialsAvailable: ['paper-drawing', 'basic-household'] }, interactionState: bridgeState });
+let blocked = false;
+try { await appRepository.completeSession(bridgeSession.id); } catch { blocked = true; }
+assert(blocked && (await appRepository.getActiveSession(profile.id))?.id === bridgeSession.id, 'An unfinished bridge return cannot create a star or discard the session.');
+bridgeState = setSelected(bridgeState, 'bridge-revision', ['shape']);
+bridgeState = setSelected(bridgeState, 'bridge-learning', ['folded']);
+bridgeState = { ...bridgeState, 'bridge-result.option-1': 2, 'bridge-second-result.objects': 5,
+  'bridge-first-confirmed': true, 'bridge-second-confirmed': true, privateNote: 'never remember my raw answer' };
+await appRepository.saveSession({ ...bridgeSession, phase: 'return', interactionState: bridgeState });
+const bridgeOutcome = await appRepository.completeSession(bridgeSession.id, 'learned');
+assert(bridgeOutcome.evidence.length === 3 && bridgeOutcome.evidence[1].statement.includes('2') && bridgeOutcome.evidence[2].statement.includes('5'), 'The bridge star must retain bounded, reported test results.');
+assert((await appRepository.completeSession(bridgeSession.id)).id === bridgeOutcome.id, 'A double completion must not create a second bridge star.');
+assert(!memoryStorage.serialized().includes('never remember my raw answer'), 'A bridge learning memory must not retain arbitrary session text.');
 
 const storedOutcomes = JSON.parse(memoryStorage.getItem('constellation.outcomes.v1') ?? '[]');
 delete storedOutcomes[0].catalogVersion;

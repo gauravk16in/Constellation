@@ -4,6 +4,10 @@ import Svg, { Circle, Path, Rect } from 'react-native-svg';
 
 import { Screen } from '@/components/screen';
 import { ThemedText } from '@/components/themed-text';
+import { getExperienceById } from '@/data/catalog/experience-catalog';
+import { getMissionDefinition } from '@/data/catalog/mission-registry';
+import { useAppData } from '@/features/app/app-data-provider';
+import { familyPromptForMission } from '@/features/missions/thinking-engine';
 import { ProtectedStarArtwork } from '@/screens/guardian/protected-star-artwork';
 import { colors, fontFamilies, radius, spacing } from '@/theme';
 
@@ -25,6 +29,9 @@ function ControlRow({ icon, title, body, onPress }: RowProps) {
 
 export function GrownUpControlsScreen() {
   const router = useRouter();
+  const { outcomes, profile } = useAppData();
+  const recent = outcomes.filter((outcome) => outcome.state === 'completed' && outcome.evidence.length > 0).slice(0, 3);
+  const latestMission = recent[0] ? getMissionDefinition(recent[0].experienceId, profile?.ageBand ?? '8-9', recent[0].catalogVersion) : undefined;
   return <Screen style={styles.screen} contentContainerStyle={styles.content}>
     <View style={styles.main}><ProtectedStarArtwork compact /><View style={styles.copy}><ThemedText accessibilityRole="header" style={styles.heading} variant="display">Your family controls.</ThemedText><ThemedText style={styles.body} variant="body">Membership, local child data, and safety information stay together behind the grown-up check.</ThemedText></View>
       <View style={styles.surface}>
@@ -34,10 +41,20 @@ export function GrownUpControlsScreen() {
         <View style={styles.divider} />
         <ControlRow icon="shield" title="Safety and support" body="How missions are reviewed, plus policies and help." onPress={() => router.push('/safety-support' as never)} />
       </View>
+      <View style={styles.copy}>
+        <ThemedText accessibilityRole="header" style={styles.rowTitle} variant="title">Recently remembered</ThemedText>
+        <ThemedText style={styles.body} variant="body">These are brief reports of what your child tried, not grades or verified mastery.</ThemedText>
+        {recent.length ? recent.map((outcome) => <View key={outcome.id} style={styles.memory}>
+          <ThemedText style={styles.rowTitle} variant="label">{getExperienceById(outcome.experienceId)?.title ?? 'A real-world experience'}</ThemedText>
+          <ThemedText style={styles.rowBody} variant="body">{outcome.evidence[0].statement}</ThemedText>
+        </View>) : <ThemedText style={styles.rowBody} variant="body">After a real-world mission, its learning memory will appear here.</ThemedText>}
+        <View style={styles.memory}><ThemedText style={styles.rowTitle} variant="label">Try together tonight</ThemedText>
+          <ThemedText style={styles.rowBody} variant="body">{latestMission ? familyPromptForMission(latestMission) : 'Choose an everyday object and ask: “How could we redesign this?”'} No answer needs to be recorded.</ThemedText></View>
+      </View>
     </View>
   </Screen>;
 }
 
 const styles = StyleSheet.create({
-  screen: { backgroundColor: colors.onboardingCanvas }, content: { alignItems: 'center', padding: spacing.six, paddingBottom: spacing.twelve }, main: { alignItems: 'center', gap: spacing.six, maxWidth: 540, width: '100%' }, copy: { gap: spacing.three, width: '100%' }, heading: { color: colors.onboardingInk, fontFamily: fontFamilies.bold, fontSize: 34, lineHeight: 39 }, body: { color: colors.onboardingInkMuted, fontSize: 17, lineHeight: 25 }, surface: { backgroundColor: colors.onboardingSurface, borderColor: colors.onboardingLine, borderCurve: 'continuous', borderRadius: radius.large, borderWidth: 1, overflow: 'hidden', width: '100%' }, row: { alignItems: 'center', flexDirection: 'row', gap: spacing.four, minHeight: 108, padding: spacing.four }, pressed: { backgroundColor: colors.onboardingCanvas }, icon: { alignItems: 'center', backgroundColor: colors.onboardingCanvas, borderRadius: radius.medium, height: 48, justifyContent: 'center', width: 48 }, rowCopy: { flex: 1, gap: spacing.one }, rowTitle: { color: colors.onboardingInk, fontFamily: fontFamilies.bold, fontSize: 16 }, rowBody: { color: colors.onboardingInkMuted, fontSize: 13, lineHeight: 19 }, arrow: { color: colors.onboardingInkMuted, fontSize: 28 }, divider: { backgroundColor: colors.onboardingLine, height: 1, marginLeft: 80 },
+  screen: { backgroundColor: colors.onboardingCanvas }, content: { alignItems: 'center', padding: spacing.six, paddingBottom: spacing.twelve }, main: { alignItems: 'center', gap: spacing.six, maxWidth: 540, width: '100%' }, copy: { gap: spacing.three, width: '100%' }, heading: { color: colors.onboardingInk, fontFamily: fontFamilies.bold, fontSize: 34, lineHeight: 39 }, body: { color: colors.onboardingInkMuted, fontSize: 17, lineHeight: 25 }, surface: { backgroundColor: colors.onboardingSurface, borderColor: colors.onboardingLine, borderCurve: 'continuous', borderRadius: radius.large, borderWidth: 1, overflow: 'hidden', width: '100%' }, memory: { backgroundColor: colors.onboardingSurface, borderColor: colors.onboardingLine, borderCurve: 'continuous', borderRadius: radius.medium, borderWidth: 1, gap: spacing.two, padding: spacing.four }, row: { alignItems: 'center', flexDirection: 'row', gap: spacing.four, minHeight: 108, padding: spacing.four }, pressed: { backgroundColor: colors.onboardingCanvas }, icon: { alignItems: 'center', backgroundColor: colors.onboardingCanvas, borderRadius: radius.medium, height: 48, justifyContent: 'center', width: 48 }, rowCopy: { flex: 1, gap: spacing.one }, rowTitle: { color: colors.onboardingInk, fontFamily: fontFamilies.bold, fontSize: 16 }, rowBody: { color: colors.onboardingInkMuted, fontSize: 13, lineHeight: 19 }, arrow: { color: colors.onboardingInkMuted, fontSize: 28 }, divider: { backgroundColor: colors.onboardingLine, height: 1, marginLeft: 80 },
 });

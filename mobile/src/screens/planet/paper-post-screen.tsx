@@ -12,6 +12,7 @@ import { BridgeDrawing, LittleLandingArtwork } from '@/features/planet/little-la
 import { PAPER_AGE_GUIDES, PAPER_SCENARIOS, paperFeedback } from '@/features/planet/paper-post-engine';
 import { PlanetChoice } from '@/features/planet/planet-controls';
 import { usePlanet } from '@/features/planet/planet-provider';
+import { MissionVoice } from '@/features/voice/mission-voice';
 import { PATH_GAMES } from '@/features/planet/path-game-engine';
 import { colors, spacing } from '@/theme';
 import { bridgeColors, planetStyles as s } from '@/theme/planet';
@@ -21,7 +22,7 @@ const shapes: { id: PaperShape; label: string }[] = [{ id: 'flat', label: 'Flat'
 
 export function PaperPostScreen({ embedded = false }: { embedded?: boolean }) {
   const router = useRouter();
-  const params = useLocalSearchParams<{ gameId?: string }>();
+  const params = useLocalSearchParams<{ gameId?: string; shape?: string }>();
   const { accessTier } = useEntitlements();
   const { data, busy, error, change, reload } = usePlanet();
   const insets = useSafeAreaInsets();
@@ -39,9 +40,10 @@ export function PaperPostScreen({ embedded = false }: { embedded?: boolean }) {
     booted.current = true;
     if (!data.session && !data.pathSession) {
       const latest = data.artifacts.at(-1);
-      void change({ type: 'start', id: makeId('game'), scenarioId: latest ? 'sandbox' : 'first-parcel', editArtifactId: latest?.id });
+      void change({ type: 'start', id: makeId('game'), scenarioId: latest ? 'sandbox' : 'first-parcel', editArtifactId: latest?.id,
+        initialShape: params.shape === 'flat' || params.shape === 'folded' || params.shape === 'accordion' ? params.shape : undefined });
     }
-  }, [available, change, data]);
+  }, [available, change, data, params.shape]);
   const session = data?.session;
   const state = session?.state;
   const act = async (action: PaperAction) => {
@@ -75,6 +77,7 @@ export function PaperPostScreen({ embedded = false }: { embedded?: boolean }) {
       <View style={s.section}>
         <ThemedText style={s.caption}>{placing ? 'MAKE IT YOURS' : 'PAPER POST · PLAY HERE'}</ThemedText>
         <ThemedText accessibilityRole="header" style={s.prompt}>{placing ? 'Where will your bridge live?' : PAPER_SCENARIOS.find((item) => item.id === session.scenarioId)?.prompt}</ThemedText>
+        {!placing ? <MissionVoice text={`${PAPER_SCENARIOS.find((item) => item.id === session.scenarioId)?.prompt ?? 'Can this paper carry the parcel?'} Tap the paper to change its shape. Tap the parcel to test it. What would you change next?`} /> : null}
       </View>
       <LittleLandingArtwork state={state} disabled={busy || placing || (session.ageBand === '6-7' && !state.guardianIntroduced)}
         onFold={() => void act({ type: 'shape', value: shapes[(shapes.findIndex((v) => v.id === state.shape) + 1) % 3].id })}

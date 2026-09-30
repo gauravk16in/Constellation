@@ -1,7 +1,7 @@
 import { getMissionDefinition } from '@/data/catalog/mission-registry';
 import { applyPlanetCommand, parsePlanet } from '@/features/planet/paper-post-engine';
 import { assertProfile, assertSession, makeId, type AppRepository } from '@/data/persistence/app-repository-types';
-import { deriveLearningEvidence } from '@/features/missions/mission-state';
+import { deriveLearningEvidence, isMissionReturnReady } from '@/features/missions/mission-state';
 import { assertEntitlementSnapshot, makeFreeEntitlementSnapshot } from '@/features/entitlements/entitlement-types';
 import type { ChildProfile, ExperienceOutcome, LearningEvidence } from '@/types/constellation';
 import type { ExperienceSession, MissionReflection, StartMissionInput } from '@/types/mission';
@@ -46,6 +46,9 @@ function writeTerminalOutcome(session: ExperienceSession, state: 'completed' | '
   const profileValue = storage().getItem(PROFILE_KEY);
   const ageBand = profileValue ? assertProfile(JSON.parse(profileValue) as ChildProfile).ageBand : '8-9';
   const definition = getMissionDefinition(session.experienceId, ageBand, session.catalogVersion);
+  if (state === 'completed' && session.experienceId === 'paper-bridge' && session.catalogVersion >= 4 && (session.phase !== 'return' || !definition || !isMissionReturnReady(definition, session.interactionState))) {
+    throw new Error('Record the first bridge test and your choice about a second test before finishing.');
+  }
   const evidence = state === 'completed' && definition ? deriveLearningEvidence(definition, session.interactionState) : [];
   const outcome = {
     id: `outcome-${session.id}`, childProfileId: session.childProfileId, experienceId: session.experienceId,

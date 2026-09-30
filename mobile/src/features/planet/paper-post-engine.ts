@@ -58,7 +58,7 @@ export function paperFeedback(state: PaperState) {
 }
 
 export function emptyPlanet(): PlanetData {
-  return { version: 1, revision: 0, session: null, artifacts: [], outcomes: [], replacement: null };
+  return { version: 1, revision: 0, session: null, artifacts: [], outcomes: [], replacement: null, numberLessons: [] };
 }
 
 function evidenceFor(state: PaperState) {
@@ -80,16 +80,23 @@ export function applyPlanetCommand(data: PlanetData, command: PlanetCommand, con
   }
   const next = JSON.parse(JSON.stringify(data)) as PlanetData;
   const session = next.session;
-  if (command.type === 'start') {
+  if (command.type === 'complete-number-lesson') {
+    if (command.lessonId !== 'near-base') throw new Error('This number lesson is unavailable.');
+    next.numberLessons ??= [];
+    if (next.numberLessons.some((lesson) => lesson.id === command.lessonId)) return data;
+    next.numberLessons.push({ id: command.lessonId, ageBand: context.ageBand, completedAt: context.now });
+  } else if (command.type === 'start') {
     if (next.pathSession && next.pathSession.id !== command.replacePathSessionId) throw new Error('Resume your current digital game or choose to replace its draft.');
     const scenario = PAPER_SCENARIOS.find((item) => item.id === command.scenarioId);
     if (!scenario) throw new Error('This game scenario is unavailable.');
     if (session && session.id !== command.replaceSessionId) throw new Error('Resume your game or choose to replace its draft.');
     if (scenario.family && !context.family) throw new Error('This scenario needs a Family membership. Free play is still available.');
     if (next.outcomes.some((item) => item.sessionId === command.id)) throw new Error('This game was already saved.');
+    if (command.initialShape && !['flat', 'folded', 'accordion'].includes(command.initialShape)) throw new Error('That paper shape is unavailable.');
     const artifact = command.editArtifactId ? next.artifacts.find((item) => item.id === command.editArtifactId) : undefined;
     if (command.editArtifactId && (!artifact || command.scenarioId !== 'sandbox')) throw new Error('Reopen your saved bridge to edit it in free play.');
     const state = initialPaper(command.scenarioId);
+    if (command.initialShape && !artifact && command.scenarioId === 'first-parcel') state.shape = command.initialShape;
     if (artifact) Object.assign(state, { shape: artifact.shape, color: artifact.color, position: artifact.position });
     next.pathSession = null;
     next.session = { id: command.id, profileId: context.profileId, gameId: 'paper-post', gameVersion: 1,
@@ -145,6 +152,9 @@ export function parsePlanet(value: string | null): PlanetData {
     if (data.outcomes.some((v) => !v.id || v.gameId !== 'paper-post' || v.gameVersion !== 1 || !Array.isArray(v.evidence) || v.evidence.length > 3 || v.evidence.some((e) => ![
       'Tested a paper bridge in a digital model.', 'Changed the support gap and tested the same paper again.', 'Compared paper shapes with the same gap and delivery.',
     ].includes(e)))) throw new Error();
+    if (data.numberLessons !== undefined && (!Array.isArray(data.numberLessons) || data.numberLessons.length > 1 ||
+      data.numberLessons.some((lesson) => lesson.id !== 'near-base' || !['6-7', '8-9', '10-12'].includes(lesson.ageBand) ||
+        !lesson.completedAt || !Number.isFinite(Date.parse(lesson.completedAt))))) throw new Error();
     if (data.session) {
       const s = data.session;
       if (!s.id || !s.profileId || s.gameId !== 'paper-post' || s.gameVersion !== 1 || !['6-7', '8-9', '10-12'].includes(s.ageBand) || !PAPER_SCENARIOS.some((v) => v.id === s.scenarioId)) throw new Error();

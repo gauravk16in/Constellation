@@ -1,7 +1,8 @@
 import { CURIOSITY_AREAS } from '../src/data/catalog/curiosity-areas';
 import { EXPERIENCE_CATALOG, getExperienceById } from '../src/data/catalog/experience-catalog';
 import { FLAGSHIP_EXPERIENCE_IDS, MISSION_DEFINITIONS, getMissionDefinition, validateMissionRegistry } from '../src/data/catalog/mission-registry';
-import { createMissionState, deriveLearningEvidence, getPrimaryInteraction, isInteractionReady, isMissionStartReady, setOrder, setSelected, setValue } from '../src/features/missions/mission-state';
+import { createMissionState, deriveLearningEvidence, getPrimaryInteraction, isInteractionReady, isMissionReturnReady, isMissionStartReady, setOrder, setSelected, setValue } from '../src/features/missions/mission-state';
+import { thinkingMovesForMission } from '../src/features/missions/thinking-engine';
 import { evaluateExperience, recommendExperiences } from '../src/features/recommendations/recommendation-engine';
 import { canAccessExperience, FREE_MISSION_COUNT } from '../src/features/entitlements/access-policy';
 import type { ChildProfile, ExperienceContext } from '../src/types/constellation';
@@ -68,6 +69,7 @@ for (const ageBand of ['6-7', '8-9', '10-12'] as const) {
     const mission = getMissionDefinition(experience.id, ageBand, experience.version)!;
     assert(mission.briefInteractions.length > 0, `${experience.id} ${ageBand} needs an authored interaction.`);
     assert(mission.narrative.signalId === experience.id, `${experience.id} ${ageBand} must resolve its stable signal.`);
+    assert(thinkingMovesForMission(mission).length === 3, `${experience.id} must invite three authored thinking moves without a score.`);
     if (ageBand === '6-7') {
       assert(mission.startPolicy.kind === 'guardian-confirm', `${experience.id} ages 6-7 must be guardian-led.`);
       assert(!mission.briefInteractions.some((interaction) => interaction.kind === 'slot-input'), `${experience.id} ages 6-7 cannot require typing.`);
@@ -103,10 +105,25 @@ for (const flagshipId of FLAGSHIP_EXPERIENCE_IDS) {
   state = { ...state, preparationChecked: mission.preparation.map((item) => item.id), guardianConfirmed: mission.startPolicy.kind === 'guardian-confirm' };
   assert(isMissionStartReady(mission, state), `${flagshipId} must become start-ready with valid authored inputs.`);
   for (const interaction of mission.returnInteractions ?? []) state = satisfyInteraction(interaction, state);
+  if (flagshipId === 'paper-bridge') state = { ...state, 'bridge-first-confirmed': true, 'bridge-second-confirmed': true };
   const evidence = deriveLearningEvidence(mission, state);
   assert(evidence.length > 0 && evidence.length <= 3, `${flagshipId} must derive one to three approved evidence summaries.`);
   assert(!JSON.stringify(evidence).includes('private test words'), `${flagshipId} evidence must not retain child-entered text.`);
 }
+const bridgeV3 = getMissionDefinition('paper-bridge', '8-9', 3)!;
+const bridgeV4 = getMissionDefinition('paper-bridge', '8-9', 4)!;
+assert(!bridgeV3.returnInteractions?.some((item) => item.id === 'bridge-revision'), 'An active v3 bridge must retain its old return definition.');
+assert(bridgeV4.returnInteractions?.some((item) => item.id === 'bridge-revision'), 'New bridges need a revision choice.');
+let bridgeState = createMissionState(bridgeV4.briefInteractions, bridgeV4.returnInteractions);
+bridgeState = setSelected(bridgeState, 'bridge-revision', ['shape']);
+assert(!isMissionReturnReady(bridgeV4, bridgeState), 'An unrecorded real test cannot light a star.');
+bridgeState = { ...bridgeState, 'bridge-first-confirmed': true, 'bridge-second-confirmed': true,
+  'bridge-result.option-1': 2, 'bridge-second-result.objects': 5 };
+bridgeState = setSelected(bridgeState, 'bridge-learning', ['folded']);
+assert(isMissionReturnReady(bridgeV4, bridgeState), 'Two reported tests may complete the bridge mission.');
+const bridgeEvidence = deriveLearningEvidence(bridgeV4, bridgeState);
+assert(bridgeEvidence.length === 3 && bridgeEvidence[1].statement.includes('2') && bridgeEvidence[2].statement.includes('5'), 'The star must remember bounded reported results.');
+assert(!JSON.stringify(bridgeEvidence).includes('guardian'), 'The memory must not include guardian confirmation.');
 for (const area of CURIOSITY_AREAS) {
   const expectedCount = area.id === 'nature-noticing' ? 5 : 4;
   assert(EXPERIENCE_CATALOG.filter((experience) => experience.domainId === area.id).length === expectedCount, `${area.id} must contain ${expectedCount} experiences.`);

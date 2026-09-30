@@ -11,7 +11,7 @@ import { colors, fontFamilies, radius, spacing } from '@/theme';
 const STORED = [
   ['Local profile', 'Nickname, age band, chosen interests, support preferences, and allowed places.'],
   ['Mission progress', 'One active mission, completed or stopped outcomes, reflections, learning memories, and stars.'],
-  ['Not collected', 'No legal name, school, photos, voice, precise location, advertising ID, or child analytics.'],
+  ['Not collected', 'No legal name, school, photos, voice recordings, precise location, advertising ID, or child analytics. Optional read-aloud uses only authored prompts through the device’s speech provider.'],
 ] as const;
 
 export function PrivacyDataScreen() {

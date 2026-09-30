@@ -108,12 +108,40 @@ export function isMissionStartReady(definition: MissionDefinition, state: Missio
   return definition.briefInteractions.every((interaction) => isInteractionReady(interaction, state)) && preparationReady && guardianReady;
 }
 
+function boundedCount(state: MissionInteractionState, key: string, maximum: number) {
+  const value = state[key];
+  return typeof value === 'number' && Number.isInteger(value) && value >= 0 && value <= maximum ? value : null;
+}
+
+export function isMissionReturnReady(definition: MissionDefinition, state: MissionInteractionState) {
+  if ((definition.returnInteractions ?? []).some((interaction) => !isInteractionReady(interaction, state))) return false;
+  if (definition.experienceId !== 'paper-bridge' || !definition.returnInteractions?.some((item) => item.id === 'bridge-revision')) return true;
+  if (state['bridge-first-confirmed'] !== true || boundedCount(state, 'bridge-result.option-1', 10) === null) return false;
+  const revision = getSelected(state, 'bridge-revision')[0];
+  if (revision === 'none') return true;
+  return (revision === 'shape' || revision === 'supports') && state['bridge-second-confirmed'] === true
+    && boundedCount(state, 'bridge-second-result.objects', 10) !== null;
+}
+
 export function getPrimaryInteraction(definition: MissionDefinition) {
   return definition.briefInteractions[0];
 }
 
 export function deriveLearningEvidence(definition: MissionDefinition, state: MissionInteractionState): LearningEvidence[] {
   if (!definition.narrative) return [];
+  if (definition.experienceId === 'paper-bridge' && definition.returnInteractions?.some((item) => item.id === 'bridge-revision')) {
+    if (!isMissionReturnReady(definition, state)) return [];
+    const first = boundedCount(state, 'bridge-result.option-1', 10)!;
+    const revision = getSelected(state, 'bridge-revision')[0];
+    const second = boundedCount(state, 'bridge-second-result.objects', 10);
+    return [
+      { kind: 'prediction', statement: 'Predicted how a paper shape might carry a load.' },
+      { kind: 'observation', statement: `Reported that the first bridge held ${first} lightweight ${first === 1 ? 'object' : 'objects'}.` },
+      revision === 'none'
+        ? { kind: 'explanation', statement: 'Compared the real test with the original idea.' }
+        : { kind: 'strategy', statement: `Changed the ${revision === 'shape' ? 'paper shape' : 'support distance'} and reported ${second} lightweight ${second === 1 ? 'object' : 'objects'} in a second test.` },
+    ];
+  }
   const interactions = [...definition.briefInteractions, ...(definition.returnInteractions ?? [])];
   return definition.narrative.evidenceRules.flatMap((rule) => {
     if (!rule.interactionId) return [{ kind: rule.kind, statement: rule.statement }];

@@ -25,7 +25,7 @@ The MVP proves the first three links. It does not claim to understand a child’
 
 ### External submission constraint
 
-Shipaton closes **September 30, 2026 at 11:45 PM PDT**. The app must be first publicly released between August 1 and September 30, be publicly downloadable in the United States, and use the RevenueCat SDK for at least one purchase. Submission assets include a public demo video under two minutes, store URL, 1024px icon, 1179×2556 screenshot without a device frame, and a free trial or judge access. Source: [RevenueCat Shipaton 2026 rules](https://revenuecat-shipaton-2026.devpost.com/rules).
+Shipaton closes **September 30, 2026 at 11:45 PM PDT**. The earlier main-category plan below assumed a public store release and verified RevenueCat purchase. **Current 2026 entry: Next Gen Award**, whose student-prototype exception does not require public store release, store URL, or judge trial/promo access. It still requires active student eligibility, a qualifying academic email, a public open-source repository with a visible license, an under-two-minute public demo, 1024px icon, and 1179×2556 unframed screenshot. See the [current submission brief](store/shipaton-next-gen-2026.md) and [official rules](https://revenuecat-shipaton-2026.devpost.com/rules). Future Android publication remains a separate release gate; neither billing nor child safety is considered verified by this entry.
 
 ### Provisional defaults
 

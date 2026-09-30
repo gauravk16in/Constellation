@@ -14,11 +14,15 @@ An experimental, child-and-guardian app where children play with an idea, try so
 
 > **Status: local prototype, not a public release.** The app builds and its automated checks run, but independent child-safety review, family testing, store billing verification, and policy review are still outstanding. See [release evidence](mobile/release/README.md).
 
+**Shipaton 2026 Next Gen:** This student-category entry does not require a public app-store release. The [submission brief](store/shipaton-next-gen-2026.md) contains judge-ready copy, the honest RevenueCat boundary, and the remaining submission checklist. The earlier [main-category draft](store/shipaton-submission.md) has different store requirements and should not be used for this entry.
+
 ## The idea
 
 Most technology competes for a child's attention. Constellation competes for their curiosity.
 
 Pocket Planet gives children ages **6–12** a small place to experiment with shapes, light, stories, plans, and movement. Some ideas continue as carefully bounded real-world missions. A digital creation stays a **Made here** find; a child-reported physical experience becomes a **Tried out there** star. Neither is presented as a grade or proof of mastery.
+
+A numbered, always-open play trail now brings the digital activities together. A new Number Patterns pilot lets younger children find complements to ten and older children investigate multiplication near ten or 100 by moving a number marker. The pilot's content still needs independent editorial and family review.
 
 ```mermaid
 flowchart LR
@@ -34,6 +38,8 @@ flowchart LR
 ```
 
 The two branches are intentionally different: digital play is useful on its own, and the physical mission never requires camera, voice, location, or a surveillance-style “proof.”
+
+The Paper Bridge mission now invites a prediction, one real test, and an optional revised test; its gold star remembers bounded, child-reported results rather than awarding a score. Mission prompts also have optional tap-to-hear narration using an installed Indian-English voice when available. The device decides the exact voice, and no child response is recorded.
 
 ## What you can try
 
@@ -102,7 +108,7 @@ npm ci
 npx expo start
 ```
 
-Use the Expo terminal prompts for web or a device. Expo Go can preview ordinary UI, but **real RevenueCat purchases require a native development or store build**. See the [mobile setup guide](mobile/README.md) for the public SDK key, development-client workflow, and billing test checklist. Never place private store or service credentials in `EXPO_PUBLIC_` variables.
+Use the Expo terminal prompts for web or a device; `npx expo start --web` opens the quick browser preview directly. Expo Go can preview ordinary UI, but **real RevenueCat purchases require a native development or store build**. See the [mobile setup guide](mobile/README.md) for the public SDK key, development-client workflow, and billing test checklist. Never place private store or service credentials in `EXPO_PUBLIC_` variables.
 
 ## Verify a change
 
@@ -137,6 +143,6 @@ For deeper context, read the [product plan](plan.md), [architecture](architectur
 
 ## Release status
 
-The target is an Android-first release, but **no public availability, purchase, trial, learning outcome, or Shipaton submission is claimed here**. The current [release evidence record](mobile/release/evidence.json) has open policy, content-review, family-pilot, billing-device, and support checks. The [Shipaton audit](store/shipaton-audit-2026-09-27.md) tracks additional competition and store requirements. Please do not replace missing evidence with placeholder approvals.
+The target is an Android-first release, but **no public availability, purchase, trial, learning outcome, or Shipaton submission is claimed here**. Next Gen is a separate student-prototype entry and does not waive requirements for a future public children's release. The current [release evidence record](mobile/release/evidence.json) has open policy, content-review, family-pilot, billing-device, and support checks. The [Shipaton audit](store/shipaton-audit-2026-09-27.md) tracks additional competition and store requirements. Please do not replace missing evidence with placeholder approvals.
 
 If you're a parent, educator, or engineer reviewing this prototype, the most useful feedback is concrete: where a child hesitated, what they actually changed or tried, whether a safety step was understood, and whether the distinction between digital play and real-world experience remained clear.
